@@ -2,8 +2,9 @@
   "name": "baby-foot-manager",
   "version": "0.0.1",
   "description": "A simple BabyFoot game manager",
-  "main": "main.js",
+  "main": "server/main.js",
   "scripts": {
+    "start": "node server/main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -20,5 +21,8 @@
   "license": "ISC",
   "dependencies": {
     "pg": "^8.2.1"
+  },
+  "devDependencies": {
+    "express": "^4.17.1"
   }
 }
