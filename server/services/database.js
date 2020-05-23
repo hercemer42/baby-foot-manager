@@ -11,7 +11,7 @@ function initDb() {
     port: BF_PGPORT
   })
 
-  // create tables if they do not already exist
+  // create tables, sequences and indexes if they do not already exist
   ;(async () => {
     const client = await pool.connect()
     
