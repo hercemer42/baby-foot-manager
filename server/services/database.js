@@ -1,9 +1,10 @@
 const { Pool } = require('pg')
 const { BF_PGUSER, BF_PGHOST, BF_PGDATABASE, BF_PGPASSWORD, BF_PGPORT } = process.env
 const schema = require('./schema')
+let pool
 
 function initDb() {
-  const pool = new Pool({
+  pool = new Pool({
     user: BF_PGUSER,
     host: BF_PGHOST,
     database: BF_PGDATABASE,
@@ -15,7 +16,7 @@ function initDb() {
   ;(async () => {
     const client = await pool.connect()
     
-    try{
+    try {
       await client.query('BEGIN')
 
       for (let s of schema) {
@@ -35,17 +36,39 @@ function initDb() {
       }
 
       await client.query('COMMIT')
-    }
-    catch (error) {
+    } catch (error) {
       await client.query('ROLLBACK')
       throw error
-    }
-    finally {
+    } finally {
       await client.release()
     }
   })().catch(e => console.error(e.stack))
 }
 
+/**
+ * Get the list of games
+ * @param {*} next express.js callback in the event of an error
+ */
+async function getGames(next) {
+  const client = await pool.connect() 
+
+  try {
+    // @TODO pagination
+    const result = await client.query(`
+      SELECT g.id, g.active, g.cancelled, p.name AS player1, p2.name AS player2, g.created_at, g.updated_at
+      FROM games g
+      INNER JOIN players p ON g.player1 = p.id
+      INNER JOIN players p2 ON g.player2 = p2.id
+    `)
+    return result.rows
+  } catch (error) {
+    next(err)
+  } finally {
+    await client.release()
+  }
+}
+
 module.exports = {
-  initDb: initDb  
+  initDb: initDb,
+  getGames: getGames
 }
