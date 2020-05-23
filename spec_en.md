@@ -88,35 +88,28 @@ Persisting data will be achieved over the WebSocket connection.  Any persisted d
 
 ### 5  Database architecture
 
-Relational database using PostgreSQL with a simple three table data structure.  The database and tables will be created at startup by the NodeJS server if they do not already exist.
+Relational database using PostgreSQL with a simple three table data structure.  The tables will be created at startup by the NodeJS server if they do not already exist.  The database must be created prior to application start as per the setup documentation in the [readme](readme.md).
 
 #### 5.1  Data structure:
 * players
   * primary key:
     - id (integer, sequenced)
   * columns:
-    - name (char(64), unique)
-
-* state 
-  * primary key:
-    - id (integer, sequenced)
-  * columns:
-    - order (integer, unique)
-    - name (char(16), unique) 
+    - name (text, unique)
 
 * games
   * primary key:
     - id (integer, sequenced)
   * columns:
     - active (boolean, unique)
+    - cancelled (boolean, unique)
     - created_at (timestamp)
     - updated_at (timestamp)
   * foreign_keys: 
     - player1 => players
     - player2 => players
-    - state => state
   * indexes:
-    - active, state, created_at
+    - active, created_at
 
 * chat
   * primary key:
@@ -126,4 +119,4 @@ Relational database using PostgreSQL with a simple three table data structure.  
     - player
     - created_at
   * indexes:
-    - name
+    - created_at
