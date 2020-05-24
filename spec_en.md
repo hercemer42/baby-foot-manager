@@ -64,8 +64,7 @@ Design will be minimalist and responsive, using color and visual cues as much as
 Jenkins and Github with Linting and Testing pipelines.
 
 #### 3.4.2  Build
-The Browser-Sync module will be used during development to autorefresh the application on detecting modifications to the client source code.
-In order to reduce project complexity, and given the small size of the application, a module bundler or minimizer will not be used.
+The Browser-Sync, gulp-nodemon and Gulp modules will be used during development to autorefresh the application on detecting modifications to the client source code.  In order to reduce project complexity, and given the small size of the application, a module bundler or minimizer will not be used.
 
 #### 3.4.2  Test
 Full test coverage will not be attempted.  We will focus on those elements likely to break:

@@ -15,6 +15,7 @@ function sendMessage(userName, content) {
  
 var counter = 0
 
+
 var interval = window.setInterval(() => {
   counter++
   sendMessage('Brian', `Message number ${counter}`)
