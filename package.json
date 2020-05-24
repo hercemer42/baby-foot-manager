@@ -20,7 +20,8 @@
   "author": "brian@brianfox.fr",
   "license": "ISC",
   "dependencies": {
-    "pg": "^8.2.1"
+    "pg": "^8.2.1",
+    "ws": "^7.3.0"
   },
   "devDependencies": {
     "express": "^4.17.1"

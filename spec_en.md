@@ -34,7 +34,7 @@ The server architecture will consist of the main process, a database connector, 
 
 #### 3.2.1  NPM modules:
 
-* WebSocket
+* ws
 * Node-postgres
 * Express
 
