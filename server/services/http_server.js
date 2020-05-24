@@ -10,7 +10,12 @@ async function startServer() {
 
 async function startAPI(db) {
   await http_server.get('/api/games', async (req, res, next) => {
-    return res.send(await db.getGames(next))
+    const { result, error } = await db.getGames()
+
+    if (error) {
+      return res.status(500)      
+    }
+    return res.send()
   })
 }
 

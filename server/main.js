@@ -8,7 +8,7 @@ async function init() {
   await db.initDb()
   await http_server.startServer()
   await http_server.startAPI(db)
-  await websocket_server.startServer()
+  await websocket_server.startServer(db)
 }
 
 init()

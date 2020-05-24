@@ -46,11 +46,7 @@ function initDb() {
   })().catch(e => console.error(e.stack))
 }
 
-/**
- * Get the list of games
- * @param {*} next express.js callback in the event of an error
- */
-async function getGames(next) {
+async function getGames() {
   const client = await _pool.connect() 
 
   try {
@@ -61,9 +57,46 @@ async function getGames(next) {
       INNER JOIN players p ON g.player1 = p.id
       INNER JOIN players p2 ON g.player2 = p2.id
     `)
-    return result.rows
+    return { result: result.rows }
   } catch (error) {
-    next(error)
+    // @TODO test this
+    return { result: null, error: true}
+  } finally {
+    await client.release()
+  }
+}
+
+async function addGame(data) {
+  const client = await _pool.connect() 
+  // @TODO create players if they don't exist
+
+  try {
+    const newGameID = await client.query(`
+      INSERT INTO games (
+        id, active, cancelled, player1, player2, created_at, updated_at
+      ) VALUES (
+        nextval('games_id_seq'),
+        true,
+        false,
+        (SELECT id FROM players WHERE name = '${data.player1}'),
+        (SELECT id FROM players WHERE name = '${data.player2}'),
+        current_timestamp,
+        current_timestamp
+      )
+      RETURNING id
+    `)
+
+    const result = await client.query(`
+      SELECT g.id, g.active, g.cancelled, p.name as player1, p2.name as player2, g.created_at, g.updated_at
+      FROM games g
+      INNER JOIN players p ON g.player1 = p.id
+      INNER JOIN players p2 ON g.player2 = p2.id
+      WHERE g.id = ${newGameID.rows[0].id}
+    `)
+
+    return { result: result.rows[0] }
+  } catch (error) {
+    return { result: null, error: error.stack}
   } finally {
     await client.release()
   }
@@ -71,5 +104,6 @@ async function getGames(next) {
 
 module.exports = {
   initDb: initDb,
-  getGames: getGames
+  getGames: getGames,
+  addGame: addGame
 }

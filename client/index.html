@@ -8,10 +8,17 @@
   <meta name="author" content="brian@brianfox.fr">
   <link rel="stylesheet" href="index.css?v=1.0">
 </head>
-
 <body>
+  <div id="gameBoard">
+    <div id="newGame">
+      <input type="text" placeholder="Joueur 1">
+      vs
+      <input type="text" placeholder="Joueur 2">
+      <button>Ajouter</button>
+    </div>
+  </div>
   <script src="config.js"></script>
-  <script src="main.js"></script>
   <script src="../services/websocket_client.js"></script>
+  <script src="../components/game_board.js"></script>
 </body>
 </html>

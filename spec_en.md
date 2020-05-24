@@ -48,7 +48,7 @@ The server architecture will consist of the main process, a database connector, 
 * PostgreSQL 9.6
 
 ### 3.3  Client
-Vanilla Javascript, HTML, and CSS using the native WebSocket and Date APIs with the ES5 standard, using a functional programming style.  Utility scripts will be used to abstract repetitive tasks such as communications protocols and DOM manipulation.  LocalStorage will be used to remember the player alias for the chat system.
+Vanilla Javascript, HTML, and CSS using the native WebSocket and Date APIs with the ES5 and HTML5 standards, using a functional programming style.  Utility scripts will be used to abstract repetitive tasks such as communications protocols and DOM manipulation.  LocalStorage will be used to remember the player alias for the chat system.
 
 #### 3.3.1  Design
 Design will be minimalist and responsive, using color and visual cues as much as possible to impart information to the user, and avoid unecessary text.  The app will scale responsively.

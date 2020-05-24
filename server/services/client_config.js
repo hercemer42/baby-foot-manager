@@ -8,8 +8,7 @@ const { EXTERNAL_IP, WEBSOCKET_PORT } = require('../config.js')
 
 async function create() {
   const contents = `
-/* eslint-disable no-unused-vars */
-const config = {
+const BF_CLIENT_CONFIG = {
   server_ip : '${ EXTERNAL_IP }',
   websocket_port : ${ WEBSOCKET_PORT }
 }
