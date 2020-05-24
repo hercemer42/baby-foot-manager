@@ -1,20 +1,21 @@
 const { Pool } = require('pg')
-const { BF_PGUSER, BF_PGHOST, BF_PGDATABASE, BF_PGPASSWORD, BF_PGPORT } = process.env
 const schema = require('./schema')
-let pool
+const { PGUSER, PGHOST, PGDATABASE, PGPASSWORD, PGPORT } = require('../config')
+
+let _pool
 
 function initDb() {
-  pool = new Pool({
-    user: BF_PGUSER,
-    host: BF_PGHOST,
-    database: BF_PGDATABASE,
-    password: BF_PGPASSWORD,
-    port: BF_PGPORT
+  _pool = new Pool({
+    user: PGUSER,
+    host: PGHOST,
+    database: PGDATABASE,
+    password: PGPASSWORD,
+    port: PGPORT
   })
 
   // create tables, sequences and indexes if they do not already exist
   ;(async () => {
-    const client = await pool.connect()
+    const client = await _pool.connect()
     
     try {
       await client.query('BEGIN')
@@ -50,7 +51,7 @@ function initDb() {
  * @param {*} next express.js callback in the event of an error
  */
 async function getGames(next) {
-  const client = await pool.connect() 
+  const client = await _pool.connect() 
 
   try {
     // @TODO pagination
