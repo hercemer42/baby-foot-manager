@@ -31,7 +31,7 @@ function initDb() {
 
         if (s.indexes) {
           for (let i of s.indexes) {
-            await client.query(`CREATE INDEX IF NOT EXISTS idx_${s.indexes.join('_')} ON ${s.table}(${s.indexes.join(', ')})`)
+            await client.query(`CREATE INDEX IF NOT EXISTS idx_${i.split(', ').join('_')} ON ${s.table}(${i})`)
           }
         }
       }
@@ -63,7 +63,7 @@ async function getGames(next) {
     `)
     return result.rows
   } catch (error) {
-    next(err)
+    next(error)
   } finally {
     await client.release()
   }

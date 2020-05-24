@@ -19,7 +19,7 @@ module.exports = [
       "updated_at TIMESTAMP NOT NULL"
     ],
     sequences: [ "games_id_seq" ],
-    indexes: [ "active", "created_at" ]
+    indexes: [ "active, created_at" ]
   },
   {
     table: "chat",
