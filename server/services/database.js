@@ -68,7 +68,8 @@ async function getGames() {
 
 async function addGame(data) {
   const client = await _pool.connect() 
-  // @TODO create players if they don't exist
+  const player1id = await createPlayer(data.player1, client)
+  const player2id = await createPlayer(data.player2, client)
 
   try {
     const newGameID = await client.query(`
@@ -78,8 +79,8 @@ async function addGame(data) {
         nextval('games_id_seq'),
         true,
         false,
-        (SELECT id FROM players WHERE name = '${data.player1}'),
-        (SELECT id FROM players WHERE name = '${data.player2}'),
+        ${player1id},
+        ${player2id},
         current_timestamp,
         current_timestamp
       )
@@ -100,6 +101,22 @@ async function addGame(data) {
   } finally {
     await client.release()
   }
+}
+
+/**
+ * Create the player if it doesn't already exist 
+ * @param { string } player
+ * @returns { number } the player id
+ */
+async function createPlayer(player, client) {
+  const existing = await client.query(`SELECT id, name FROM players WHERE name = '${player}'`)
+
+  if (!existing.rows.length) {
+    const newPlayer = await client.query(`INSERT INTO players (id, name) VALUES (nextval('players_id_seq'), '${player}') RETURNING id`)
+    return newPlayer.rows[0].id
+  }
+
+  return existing.rows[0].id
 }
 
 module.exports = {
