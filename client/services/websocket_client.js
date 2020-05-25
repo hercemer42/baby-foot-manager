@@ -1,7 +1,7 @@
 'use strict'
 
-const WebSocketService = function() {
-  const _socket = new WebSocket(`ws://${BF_CLIENT_CONFIG.server_ip}:${BF_CLIENT_CONFIG.websocket_port}`)
+const BfWebSocketService = function() {
+  const _socket = new WebSocket(`ws://${BF_CLIENT_CONFIG.SERVER_IP}:${BF_CLIENT_CONFIG.WEBSOCKET_PORT}`)
 
   _socket.addEventListener('message', event => {
     const data = JSON.parse(event.data)
@@ -30,4 +30,4 @@ const WebSocketService = function() {
   }
 }
 
-const webSocketService = new WebSocketService()
+const bfWebSocketService = new BfWebSocketService()

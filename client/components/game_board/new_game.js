@@ -2,15 +2,15 @@
   'use strict'
 
   // get the elements
-  const gameBoard = document.getElementById('gameBoard')
-  const playerInputs = gameBoard.getElementsByTagName('input')
+  const newGame = document.getElementById('newGame')
+  const playerInputs = newGame.getElementsByTagName('input')
   const player1Input  = playerInputs[0]
   const player2Input  = playerInputs[1]
-  const addGameButton  = gameBoard.getElementsByTagName('button')[0]
+  const addGameButton  = newGame.getElementsByTagName('button')[0]
 
   // declare the bindings
-  let player1 = player1Input.value
-  let player2 = player2Input.value
+  var player1 = player1Input.value
+  var player2 = player2Input.value
 
   // add the listeners
   player1Input.addEventListener('keyup', function(event) {
@@ -26,6 +26,6 @@
       return
     }
 
-    webSocketService.sendMessage('addGame', { player1: player1, player2: player2 })
+    bfWebSocketService.sendMessage('addGame', { player1: player1, player2: player2 })
   })
 })()
