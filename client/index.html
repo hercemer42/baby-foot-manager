@@ -7,7 +7,8 @@
   <meta name="description" content="BabyFoot Manager">
   <meta name="author" content="brian@brianfox.fr">
   <link rel="stylesheet" href="index.css?v=1.0">
-  <link rel="stylesheet" href="./components/game_board.css"/>
+  <link rel="stylesheet" href="./components/game_board/new_game.css?v=1.0"/>
+  <link rel="stylesheet" href="./components/game_board/game_list.css?v=1.0"/>
 </head>
 <body>
   <div id="gameBoard" onsubmit="event.preventDefault()">
@@ -18,9 +19,14 @@
       <input type="text" placeholder="Joueur 2" required>
       <button type='submit'>Nouvelle partie</button>
     </form>
+    <div id="gameList">
+      <ul></ul>
+    </div>
   </div>
   <script src="config.js"></script>
-  <script src="./services/websocket_client.js"></script>
-  <script src="./components/game_board.js"></script>
+  <script src="./services/websocket_client.js?v=1.0"></script>
+  <script src="./services/http_client.js?v=1.0"></script>
+  <script src="./components/game_board/new_game.js?v=1.0"></script>
+  <script src="./components/game_board/game_list.js?v=1.0"></script>
 </body>
 </html>

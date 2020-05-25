@@ -11,7 +11,19 @@ function messageRouter(message, db, server, client) {
         }
 
         server.clients.forEach(c => {
-          c.send(JSON.stringify({ type: 'newGame', body: result }));
+          c.send(JSON.stringify({ type: 'newGame', body: result }))
+        })
+      })
+      break
+    
+    case 'updateGame':
+      db.updateGame(message.body).then(({result, error}) => {
+        if (error) {
+          client.send(JSON.stringify({ type: 'error', body: error}))
+        }
+
+        server.clients.forEach(c => {
+          c.send(JSON.stringify({ type: 'savedGame', body: result }))
         })
       })
       break

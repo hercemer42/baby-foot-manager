@@ -101,7 +101,6 @@ Relational database using PostgreSQL with a simple three table data structure.  
     - id (integer, sequenced)
   * columns:
     - active (boolean, unique)
-    - cancelled (boolean, unique)
     - created_at (timestamp)
     - updated_at (timestamp)
   * foreign_keys: 

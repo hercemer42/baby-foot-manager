@@ -12,3 +12,7 @@ h1 {
   margin: 10px 0px 15px;
 }
 
+ul {
+  list-style: none;
+  padding-left: 10px;
+}

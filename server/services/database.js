@@ -52,10 +52,11 @@ async function getGames() {
   try {
     // @TODO pagination
     const result = await client.query(`
-      SELECT g.id, g.active, g.cancelled, p.name AS player1, p2.name AS player2, g.created_at, g.updated_at
+      SELECT g.id, g.active, p.name AS player1, p2.name AS player2, g.created_at, g.updated_at
       FROM games g
       INNER JOIN players p ON g.player1 = p.id
       INNER JOIN players p2 ON g.player2 = p2.id
+      ORDER BY g.active DESC, g.created_at DESC
     `)
     return { result: result.rows }
   } catch (error) {
@@ -74,11 +75,10 @@ async function addGame(data) {
   try {
     const newGameID = await client.query(`
       INSERT INTO games (
-        id, active, cancelled, player1, player2, created_at, updated_at
+        id, active, player1, player2, created_at, updated_at
       ) VALUES (
         nextval('games_id_seq'),
         true,
-        false,
         ${player1id},
         ${player2id},
         current_timestamp,
@@ -88,7 +88,7 @@ async function addGame(data) {
     `)
 
     const result = await client.query(`
-      SELECT g.id, g.active, g.cancelled, p.name as player1, p2.name as player2, g.created_at, g.updated_at
+      SELECT g.id, g.active, p.name as player1, p2.name as player2, g.created_at, g.updated_at
       FROM games g
       INNER JOIN players p ON g.player1 = p.id
       INNER JOIN players p2 ON g.player2 = p2.id
@@ -101,6 +101,25 @@ async function addGame(data) {
   } finally {
     await client.release()
   }
+}
+
+async function updateGame(data) {
+  const client = await _pool.connect() 
+
+  try {
+    const result = await client.query(`
+      UPDATE games SET active = ${data.active}, updated_at = current_timestamp
+      WHERE games.id = ${data.id}
+      RETURNING id
+    `)
+
+    return { result: result.rows[0] }
+  } catch (error) {
+    return { result: null, error: error.stack}
+  } finally {
+    await client.release()
+  }
+
 }
 
 /**
@@ -122,5 +141,6 @@ async function createPlayer(player, client) {
 module.exports = {
   initDb: initDb,
   getGames: getGames,
-  addGame: addGame
+  addGame: addGame,
+  updateGame: updateGame
 }

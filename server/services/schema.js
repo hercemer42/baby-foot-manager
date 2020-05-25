@@ -12,7 +12,6 @@ module.exports = [
     columns: [
       "id INTEGER PRIMARY KEY",
       "active BOOLEAN DEFAULT true NOT NULL",
-      "cancelled BOOLEAN DEFAULT false NOT NULL",
       "player1 INTEGER REFERENCES players(id) NOT NULL",
       "player2 INTEGER REFERENCES players(id) NOT NULL",
       "created_at TIMESTAMP NOT NULL",
