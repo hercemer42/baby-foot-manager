@@ -7,18 +7,20 @@
   <meta name="description" content="BabyFoot Manager">
   <meta name="author" content="brian@brianfox.fr">
   <link rel="stylesheet" href="index.css?v=1.0">
+  <link rel="stylesheet" href="./components/game_board.css"/>
 </head>
 <body>
-  <div id="gameBoard">
-    <div id="newGame">
-      <input type="text" placeholder="Joueur 1">
+  <div id="gameBoard" onsubmit="event.preventDefault()">
+    <h1>BabyFoot Manager</h1> 
+    <form id="newGame">
+      <input type="text" placeholder="Joueur 1" required>
       vs
-      <input type="text" placeholder="Joueur 2">
-      <button>Ajouter</button>
-    </div>
+      <input type="text" placeholder="Joueur 2" required>
+      <button type='submit'>Nouvelle partie</button>
+    </form>
   </div>
   <script src="config.js"></script>
-  <script src="../services/websocket_client.js"></script>
-  <script src="../components/game_board.js"></script>
+  <script src="./services/websocket_client.js"></script>
+  <script src="./components/game_board.js"></script>
 </body>
 </html>
