@@ -15,8 +15,10 @@
 
     // do stuff depending on the class of the clicked element
     switch(elementClass) {
+      // finish a game
       case 'finishCheckBox' :
-        bfWebSocketService.sendMessage('updateGame', { id: gameId, active: event.target.checked })
+        bfWebSocketService.sendMessage('updateGame', { id: gameId, active: !event.target.checked })
+        event.target.disabled = true
         break
     }
 
@@ -46,7 +48,8 @@
       // build the finish game check box
       var finishCheckBox = document.createElement('input')
       finishCheckBox.type = "checkbox"
-      finishCheckBox.checked = game.active
+      finishCheckBox.checked = !game.active
+      finishCheckBox.disabled = !game.active
       finishCheckBox.classList.add('finishCheckBox')
       newGameElement.appendChild(finishCheckBox)
 
