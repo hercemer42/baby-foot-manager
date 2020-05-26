@@ -7,8 +7,8 @@ function messageRouter(message, db, server, client) {
       runQuery(message, db, server, client, 'addGame')
       break
     
-    case 'updateGame':
-      runQuery(message, db, server, client, 'updateGame')
+    case 'finishGame':
+      runQuery(message, db, server, client, 'finishGame')
       break
 
     case 'deleteGame':
@@ -18,7 +18,7 @@ function messageRouter(message, db, server, client) {
 }
 
 /**
- * requests the database service to run a query (addGame, saveGame, updateGame etc) 
+ * requests the database service to run a query (addGame, saveGame, finishGame etc) 
  * @param { string } queryType 
  */
 function runQuery(message, db, server, client, queryType) {

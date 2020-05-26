@@ -1,10 +1,15 @@
 (function () {
   'use strict'
   // keep a marker of the last active game position in the list as a reference for when adding new elements
-  let lastActiveGameIndex = 0
+  let lastActiveGameIndex = -1
 
-  // get the elements
+  // get the list of game elements
   const gameList = document.getElementById('gameList').getElementsByTagName('ul')[0]
+
+  // get the list of historical games
+  bfHttpService.getGameList('games').then(function(gamesData){
+    writeGamesToDom(gamesData) 
+  })
 
   /**
    * Add a listener to the gamelist.
@@ -15,21 +20,16 @@
     const elementClass = event.target.classList[0]
     const parentElement = event.target.parentElement
     const gameId = parentElement.getAttribute('data-id')
-    const textElement = parentElement.getElementsByTagName('span')[0]
 
-    // do stuff depending on the class of the clicked element
+    // create an outgoing event router depending on the class of the clicked element
     switch(elementClass) {
-      // finish a game
+      // request to finish a game
       case 'finishCheckBox' :
-        bfWebSocketService.sendMessage('updateGame', { id: gameId, active: !event.target.checked })
-
-        if (event.target.checked) {
-          textElement.classList.add('finished')
-        }
-
-        event.target.disabled = true
+        bfWebSocketService.sendMessage('finishGame', { id: gameId, active: !event.target.checked })
+        lastActiveGameIndex--
         break
       
+      // request to delete a game
       case 'deleteCheckBox' :
         bfWebSocketService.sendMessage('deleteGame', { id: gameId })
         break
@@ -40,36 +40,78 @@
     }
   })
 
-  // get the list of historical games
-  bfHttpService.getGameList('games').then(function(games){
-    writeGamesToDom(games) 
-  })
+  // create an incoming event router by subscibing to webSocket events
+  bfWebSocketService.socket.onmessage = function(event){
+    const data = JSON.parse(event.data)
+
+    switch(data.type) {
+      case 'addGame' :
+        addGame(data.body)
+        break
+      case 'finishGame' :
+        deleteGame(data.body.id)
+        addGame(data.body)
+        break
+      case 'deleteGame' :
+        deleteGame(data.body)
+        break
+    }
+  }
+
+  function addGame(gameData) {
+    const newGameElement = buildNewGameElement(gameData) 
+    gameList.insertBefore(newGameElement, gameList.children[lastActiveGameIndex + 1])
+
+    if (gameData.active) {
+      lastActiveGameIndex++
+    }
+  }
+
+  function deleteGame(id) {
+    const gameElementToDelete = gameList.querySelectorAll("[data-id='" + id + "']")[0]
+
+    if (!gameElementToDelete) {
+      return
+    }
+
+    const finished = gameElementToDelete.getElementsByClassName('finishCheckBox')[0].checked
+
+    gameList.removeChild(gameElementToDelete)
+
+    if (!finished) {
+      lastActiveGameIndex--
+    }
+  }
 
   /**
    * Display the list of games on the page 
-   * @param { object } games 
+   * @param { object } gamesData 
    */
-  function writeGamesToDom(games) {
-    games.forEach(function(game, index) {
-      if (game.active) {
+  function writeGamesToDom(gamesData) {
+    gamesData.forEach(function(gameData, index) {
+      if (gameData.active) {
         lastActiveGameIndex = index
       }
 
-      var newGameElement = document.createElement('li')
-      newGameElement.setAttribute('data-id', game.id)
-      const newGameText = buildGameText(game.player1, game.player2)
-      newGameElement.appendChild(newGameText)
-      const finishCheckBox = buildFinishCheckBox(game.active)
-      newGameElement.appendChild(finishCheckBox)
-      newGameElement.appendChild(buildDeleteCheckBox())
-
-      if (finishCheckBox.checked) {
-        newGameText.classList.add('finished')
-      }
-
       // write to dom
-      gameList.appendChild(newGameElement)
+      gameList.appendChild(buildNewGameElement(gameData))
     })
+  }
+
+  function buildNewGameElement(gameData) {
+    var newGameElement = document.createElement('li')
+    newGameElement.setAttribute('data-id', gameData.id)
+    const newGameText = buildGameText(gameData.player1, gameData.player2)
+    newGameElement.appendChild(newGameText)
+    const finishCheckBox = buildFinishCheckBox(gameData.active)
+    newGameElement.appendChild(finishCheckBox)
+    newGameElement.appendChild(buildDeleteCheckBox())
+
+    if (finishCheckBox.checked) {
+      newGameText.classList.add('finished')
+    }
+
+    return newGameElement
   }
 
   function buildDeleteCheckBox() {

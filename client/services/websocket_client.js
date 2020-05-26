@@ -1,27 +1,25 @@
 'use strict'
 
 const BfWebSocketService = function() {
-  const _socket = new WebSocket(`ws://${BF_CLIENT_CONFIG.SERVER_IP}:${BF_CLIENT_CONFIG.WEBSOCKET_PORT}`)
+  this.socket = new WebSocket(`ws://${BF_CLIENT_CONFIG.SERVER_IP}:${BF_CLIENT_CONFIG.WEBSOCKET_PORT}`)
 
-  _socket.addEventListener('message', event => {
+  // listen for errors
+  this.socket.onmessage = function(event){
     const data = JSON.parse(event.data)
 
-    switch(data.type) {
-      case 'error' :
-        console.log(`Error: ${data.body}`)
-        break
-      default:
-        console.log(`Message from server: ${JSON.stringify(data)}`)
+    if (data.type === 'error') {
+      console.error(`Error: ${data.body}`)
+      // @TODO display something on error
     }
-  })
+  }
 
-  _socket.onerror = function(event) {
+  this.socket.onerror = function(event) {
     console.error(`The following error occured:  ${event}`);
     // @TODO display something on error
   }
 
   this.sendMessage = function(type, body) {
-    _socket.send(
+    this.socket.send(
       JSON.stringify({
         type: type,
         body: body

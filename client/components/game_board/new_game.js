@@ -21,6 +21,7 @@
     player2 = event.target.value
   })
   
+  // add the game on form submit
   addGameButton.addEventListener('click', function(event) {
     if (!player1 || !player2) {
       return

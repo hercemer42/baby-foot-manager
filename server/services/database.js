@@ -46,6 +46,16 @@ function initDb() {
   })().catch(e => console.error(e.stack))
 }
 
+async function _getGame(client, gameId) {
+  return await client.query(`
+    SELECT g.id, g.active, p.name as player1, p2.name as player2, g.created_at, g.updated_at
+    FROM games g
+    INNER JOIN players p ON g.player1 = p.id
+    INNER JOIN players p2 ON g.player2 = p2.id
+    WHERE g.id = ${gameId}
+  `)
+}
+
 async function getGames() {
   const client = await _pool.connect() 
 
@@ -100,14 +110,7 @@ async function addGame(data) {
       RETURNING id
     `)
 
-    const result = await client.query(`
-      SELECT g.id, g.active, p.name as player1, p2.name as player2, g.created_at, g.updated_at
-      FROM games g
-      INNER JOIN players p ON g.player1 = p.id
-      INNER JOIN players p2 ON g.player2 = p2.id
-      WHERE g.id = ${newGameID.rows[0].id}
-    `)
-
+    const result = await _getGame(client, newGameID.rows[0].id)
     return { result: result.rows[0] }
   } catch (error) {
     return { result: null, error: error.stack}
@@ -116,15 +119,17 @@ async function addGame(data) {
   }
 }
 
-async function updateGame(data) {
+async function finishGame(data) {
   const client = await _pool.connect() 
 
   try {
-    const result = await client.query(`
+    const updatedGame = await client.query(`
       UPDATE games SET active = ${data.active}, updated_at = current_timestamp
       WHERE games.id = ${data.id}
       RETURNING id
     `)
+
+    const result = await _getGame(client, updatedGame.rows[0].id)
 
     return { result: result.rows[0] }
   } catch (error) {
@@ -168,6 +173,6 @@ module.exports = {
   initDb: initDb,
   getGames: getGames,
   addGame: addGame,
-  updateGame: updateGame,
+  finishGame: finishGame,
   deleteGame: deleteGame
 }
