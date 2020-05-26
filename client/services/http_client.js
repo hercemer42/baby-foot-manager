@@ -1,3 +1,4 @@
+'use strict'
 
 const BfHttpService = function() {
   const API_PATH = `http://${BF_CLIENT_CONFIG.SERVER_IP}:${BF_CLIENT_CONFIG.HTTP_PORT}/api/`

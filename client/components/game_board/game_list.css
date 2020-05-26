@@ -1,13 +1,30 @@
 #gameList {
-  margin-top: 15px;
-  width: 587px;
-  max-width: 100%;
+  margin-top: 35px;
+  width: 100%;
+  max-width: 597px;
   height: 500px;
   max-height: 100%;
   border: 1px indigo solid;
   border-radius: 5px;
-  overflow-y: scroll;
+  overflow-y: auto;
   font-family: sans-serif;
+}
+
+#gameList h2 {
+  position: absolute;
+  margin: -15px 10px;
+  padding: 0px 5px 1px;
+  display: inline-block;
+  font-size: 1.3rem;
+  border: thin green solid;
+  color: indigo;
+  background: white;
+  border-radius: 5px;
+  font-family: "courier";
+}
+
+#gameList ul {
+  margin-top: 25px;
 }
 
 #gameList li {
@@ -75,7 +92,7 @@
   color: gray;
 }
 
-#gameList span {
+#gameList ul span {
   display: inline-block;
   width: 280px;
   max-width: 100%;

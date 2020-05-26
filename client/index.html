@@ -12,7 +12,8 @@
 </head>
 <body>
   <div id="gameBoard" onsubmit="event.preventDefault()">
-    <h1>BabyFoot Manager</h1> 
+    <h1>BabyFoot Manager</h1>
+    <img src="assets/icon.png"/>
     <form id="newGame">
       <input type="text" placeholder="Joueur 1" required>
       vs
@@ -20,6 +21,7 @@
       <button type='submit'>Nouvelle partie</button>
     </form>
     <div id="gameList">
+      <h2>Parties en cours: <span></span></h2>
       <ul></ul>
     </div>
   </div>

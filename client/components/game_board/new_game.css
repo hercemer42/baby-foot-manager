@@ -5,6 +5,7 @@ input {
 
 #gameBoard input:first-of-type {
   margin-right: 6px;
+  margin-left: 10px;
 }
 
 #gameBoard input:last-of-type {

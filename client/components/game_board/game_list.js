@@ -4,7 +4,8 @@
   let lastActiveGameIndex = -1
 
   // get the list of game elements
-  const gameList = document.getElementById('gameList').getElementsByTagName('ul')[0]
+  const gameListContainer = document.getElementById('gameList')
+  const gameList = gameListContainer.getElementsByTagName('ul')[0]
 
   // get the list of historical games
   bfHttpService.get('games').then(function(gamesData){
@@ -71,6 +72,7 @@
 
     if (gameData.active) {
       lastActiveGameIndex++
+      updateGameCounter()
     }
   }
 
@@ -90,6 +92,7 @@
       deleteGame(gameData.id)
       addGame(gameData)
       lastActiveGameIndex--
+      updateGameCounter()
     }, 250);
   }
 
@@ -123,7 +126,13 @@
 
     if (!finished) {
       lastActiveGameIndex--
+      updateGameCounter()
     }
+  }
+
+  function updateGameCounter() {
+    const gameListHeading = gameListContainer.getElementsByTagName('h2')[0]
+    gameListHeading.getElementsByTagName('span')[0].innerHTML = lastActiveGameIndex + 1
   }
 
   /**
@@ -139,6 +148,8 @@
       // write to dom
       gameList.appendChild(buildNewGameElement(gameData))
     })
+
+    updateGameCounter()
   }
 
   function buildNewGameElement(gameData) {
