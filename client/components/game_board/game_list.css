@@ -14,6 +14,18 @@
   margin-bottom: 5px;
 }
 
+#gameList .newGame {
+  background: rgba(81,235,80,0.3);
+}
+
+#gameList .deletedGame {
+  background: rgba(255,82,80,0.51);
+}
+
+#gameList .finishedGame {
+  background: rgba(190,190,190,0.51);
+}
+
 #gameList input[type="checkbox"] {
   -webkit-appearance: initial;
   appearance: initial;
@@ -22,7 +34,7 @@
   font-family: 'sans-serif';
   border-radius: 0;
   position: relative;
-  top: 8px;
+  top: 2px;
   cursor: pointer;
 }
 
@@ -67,4 +79,6 @@
   display: inline-block;
   width: 280px;
   max-width: 100%;
+  vertical-align: super;
+  margin-left: 10px;
 }

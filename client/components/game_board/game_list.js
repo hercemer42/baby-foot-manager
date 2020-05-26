@@ -25,14 +25,8 @@
     switch(elementClass) {
       // request to finish a game
       case 'finishCheckBox' :
-        /**
-         * Create a visual pause between the user finishing a game and it moving down the list
-         * so that they have time to realize their action took effect
-         */
-        setTimeout(() => {
-          bfWebSocketService.sendMessage('finishGame', { id: gameId, active: !event.target.checked })
-          lastActiveGameIndex--
-        }, 200);
+        event.target.disabled = true
+        bfWebSocketService.sendMessage('finishGame', { id: gameId, active: !event.target.checked })
         break
       
       // request to delete a game
@@ -55,24 +49,67 @@
         addGame(data.body)
         break
       case 'finishGame' :
-        deleteGame(data.body.id)
-        addGame(data.body)
+        finishGame(data.body)
         break
       case 'deleteGame' :
-        deleteGame(data.body)
+        deleteGameWithVisualEffect(data.body)
         break
     }
   }
 
   function addGame(gameData) {
     const newGameElement = buildNewGameElement(gameData) 
-    gameList.insertBefore(newGameElement, gameList.children[lastActiveGameIndex + 1])
+    const tempClass = gameData.active ? 'newGame' : 'finishedGame'
+    newGameElement.classList.add(tempClass)
+    const insertIndex = lastActiveGameIndex + (gameData.active ? 1 : 0)
+
+    gameList.insertBefore(newGameElement, gameList.children[insertIndex])
+    // briefly color newly arrived games so that the user can distinguish them
+    setTimeout(() => {
+      newGameElement.classList.remove(tempClass)
+    }, 300);
 
     if (gameData.active) {
       lastActiveGameIndex++
     }
   }
 
+  function finishGame(gameData) {
+    const gameElementToDelete = gameList.querySelectorAll("[data-id='" + gameData.id + "']")[0]
+    const textElement = gameElementToDelete.getElementsByTagName('span')[0]
+    const finishCheckBox = gameElementToDelete.getElementsByClassName('finishCheckBox')[0]
+    gameElementToDelete.classList.add('finishedGame')
+    finishCheckBox.checked = true
+    finishCheckBox.disabled = true
+    textElement.classList.add('finished')
+    /**
+     * Create a visual pause between the user finishing a game and it moving down the list
+     * so that they have time to realize their action took effect
+     */
+    setTimeout(function() {
+      deleteGame(gameData.id)
+      addGame(gameData)
+      lastActiveGameIndex--
+    }, 250);
+  }
+
+  /**
+   * Delete a game with a visual effect
+   * @param { number } id 
+   */
+  function deleteGameWithVisualEffect(id) {
+    const gameElementToDelete = gameList.querySelectorAll("[data-id='" + id + "']")[0]
+    gameElementToDelete.classList.add('deletedGame')
+
+    setTimeout(() => {
+      deleteGame(id) 
+    }, 150);
+  }
+
+  /**
+   * Remove a game from the dom 
+   * @param { number } id 
+   */
   function deleteGame(id) {
     const gameElementToDelete = gameList.querySelectorAll("[data-id='" + id + "']")[0]
 
