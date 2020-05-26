@@ -97,7 +97,7 @@
   }
 
   /**
-   * Delete a game with a visual effect
+   * Delete a game and display a visual effect
    * @param { number } id 
    */
   function deleteGameWithVisualEffect(id) {

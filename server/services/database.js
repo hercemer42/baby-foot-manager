@@ -37,7 +37,7 @@ async function initDb(config) {
     await client.query('COMMIT')
   } catch (error) {
     await client.query('ROLLBACK')
-    console.error(e.stack)
+    console.error(error.stack)
     throw error
   } finally {
     await client.release()
@@ -141,8 +141,7 @@ async function deleteGame(data) {
   const client = await _pool.connect() 
 
   try {
-    const result = await client.query(`DELETE FROM games WHERE id = ${data.id}`)
-
+    await client.query(`DELETE FROM games WHERE id = ${data.id}`)
     return { result: data.id }
   } catch (error) {
     return { result: null, error: error.stack}
