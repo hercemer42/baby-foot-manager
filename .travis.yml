@@ -4,6 +4,8 @@ os:
   - linux
   - osx
 language: node_js
+node_js:
+  - 12
 dist: xenial
 sudo: required
 services:
