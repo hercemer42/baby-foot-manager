@@ -7,7 +7,7 @@
   const gameList = document.getElementById('gameList').getElementsByTagName('ul')[0]
 
   // get the list of historical games
-  bfHttpService.getGameList('games').then(function(gamesData){
+  bfHttpService.get('games').then(function(gamesData){
     writeGamesToDom(gamesData) 
   })
 
