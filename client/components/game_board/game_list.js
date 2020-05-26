@@ -25,8 +25,14 @@
     switch(elementClass) {
       // request to finish a game
       case 'finishCheckBox' :
-        bfWebSocketService.sendMessage('finishGame', { id: gameId, active: !event.target.checked })
-        lastActiveGameIndex--
+        /**
+         * Create a visual pause between the user finishing a game and it moving down the list
+         * so that they have time to realize their action took effect
+         */
+        setTimeout(() => {
+          bfWebSocketService.sendMessage('finishGame', { id: gameId, active: !event.target.checked })
+          lastActiveGameIndex--
+        }, 200);
         break
       
       // request to delete a game
