@@ -5,7 +5,7 @@
   "main": "server/main.js",
   "scripts": {
     "start": "node server/main.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "keywords": [
     "BabyFoot",
@@ -31,6 +31,7 @@
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.2",
     "gulp": "^4.0.2",
-    "gulp-nodemon": "^2.5.0"
+    "gulp-nodemon": "^2.5.0",
+    "mocha": "^7.2.0"
   }
 }

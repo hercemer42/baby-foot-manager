@@ -1,49 +1,47 @@
 const { Pool } = require('pg')
 const schema = require('./schema')
-const { PGUSER, PGHOST, PGDATABASE, PGPASSWORD, PGPORT } = require('../config')
 
 let _pool
 
-function initDb() {
+async function initDb(config) {
   _pool = new Pool({
-    user: PGUSER,
-    host: PGHOST,
-    database: PGDATABASE,
-    password: PGPASSWORD,
-    port: PGPORT
+    user: config.PGUSER,
+    host: config.PGHOST,
+    database: config.PGDATABASE,
+    password: config.PGPASSWORD,
+    port: config.PGPORT
   })
 
   // create tables, sequences and indexes if they do not already exist
-  ;(async () => {
-    const client = await _pool.connect()
-    
-    try {
-      await client.query('BEGIN')
+  const client = await _pool.connect()
+  
+  try {
+    await client.query('BEGIN')
 
-      for (let s of schema) {
-        if (s.sequences) {
-          for (let seq of s.sequences) {
-            await client.query(`CREATE SEQUENCE IF NOT EXISTS ${seq}`)
-          }
-        }
-
-        await client.query(`CREATE TABLE IF NOT EXISTS ${s.table}(${s.columns.join(", ")})`)
-
-        if (s.indexes) {
-          for (let i of s.indexes) {
-            await client.query(`CREATE INDEX IF NOT EXISTS idx_${i.split(', ').join('_')} ON ${s.table}(${i})`)
-          }
+    for (let s of schema) {
+      if (s.sequences) {
+        for (let seq of s.sequences) {
+          await client.query(`CREATE SEQUENCE IF NOT EXISTS ${seq}`)
         }
       }
 
-      await client.query('COMMIT')
-    } catch (error) {
-      await client.query('ROLLBACK')
-      throw error
-    } finally {
-      await client.release()
+      await client.query(`CREATE TABLE IF NOT EXISTS ${s.table}(${s.columns.join(", ")})`)
+
+      if (s.indexes) {
+        for (let i of s.indexes) {
+          await client.query(`CREATE INDEX IF NOT EXISTS idx_${i.split(', ').join('_')} ON ${s.table}(${i})`)
+        }
+      }
     }
-  })().catch(e => console.error(e.stack))
+
+    await client.query('COMMIT')
+  } catch (error) {
+    await client.query('ROLLBACK')
+    console.error(e.stack)
+    throw error
+  } finally {
+    await client.release()
+  }
 }
 
 async function _getGame(client, gameId) {
@@ -124,7 +122,7 @@ async function finishGame(data) {
 
   try {
     const updatedGame = await client.query(`
-      UPDATE games SET active = ${data.active}, updated_at = current_timestamp
+      UPDATE games SET active = false, updated_at = current_timestamp
       WHERE games.id = ${data.id}
       RETURNING id
     `)
@@ -169,10 +167,15 @@ async function createPlayer(player, client) {
   return existing.rows[0].id
 }
 
+function endPool() {
+  _pool.end()
+}
+
 module.exports = {
   initDb: initDb,
   getGames: getGames,
   addGame: addGame,
   finishGame: finishGame,
-  deleteGame: deleteGame
+  deleteGame: deleteGame,
+  endPool: endPool
 }
