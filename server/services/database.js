@@ -51,16 +51,29 @@ async function getGames() {
 
   try {
     // @TODO pagination
-    const result = await client.query(`
+    // first get the active games in ascending order (oldest first)
+    const activeGames = await client.query(`
       SELECT g.id, g.active, p.name AS player1, p2.name AS player2, g.created_at, g.updated_at
       FROM games g
       INNER JOIN players p ON g.player1 = p.id
       INNER JOIN players p2 ON g.player2 = p2.id
-      ORDER BY g.active DESC, g.created_at DESC
+      WHERE g.active = true
+      ORDER BY g.updated_at ASC
     `)
-    return { result: result.rows }
+
+    // then get the finished games in descending order (most recent first)
+    const finishedGames = await client.query(`
+      SELECT g.id, g.active, p.name AS player1, p2.name AS player2, g.created_at, g.updated_at
+      FROM games g
+      INNER JOIN players p ON g.player1 = p.id
+      INNER JOIN players p2 ON g.player2 = p2.id
+      WHERE g.active = false
+      ORDER BY g.updated_at DESC
+    `)
+
+    return { result: activeGames.rows.concat(finishedGames.rows) }
   } catch (error) {
-    // @TODO test this
+    console.error('error', error)
     return { result: null, error: true}
   } finally {
     await client.release()
@@ -119,7 +132,20 @@ async function updateGame(data) {
   } finally {
     await client.release()
   }
+}
 
+async function deleteGame(data) {
+  const client = await _pool.connect() 
+
+  try {
+    const result = await client.query(`DELETE FROM games WHERE id = ${data.id}`)
+
+    return { result: data.id }
+  } catch (error) {
+    return { result: null, error: error.stack}
+  } finally {
+    await client.release()
+  }
 }
 
 /**
@@ -142,5 +168,6 @@ module.exports = {
   initDb: initDb,
   getGames: getGames,
   addGame: addGame,
-  updateGame: updateGame
+  updateGame: updateGame,
+  deleteGame: deleteGame
 }

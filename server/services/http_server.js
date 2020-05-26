@@ -14,7 +14,8 @@ async function startAPI(db) {
   await http_server.get('/api/games', async (req, res, next) => {
     const { result, error } = await db.getGames()
     if (error) {
-      return res.status(500)      
+      res.status(500)
+      return res.json({ error: 'There has been a server error, try again later.' })
     }
 
     return res.send(result)

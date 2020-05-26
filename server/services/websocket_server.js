@@ -4,30 +4,33 @@ const { WEBSOCKET_PORT } = require('../config.js')
 function messageRouter(message, db, server, client) {
   switch (message.type) {
     case 'addGame':
-      db.addGame(message.body).then(({result, error}) => {
-        if (error) {
-          client.send(JSON.stringify({ type: 'error', body: error}))
-          return
-        }
-
-        server.clients.forEach(c => {
-          c.send(JSON.stringify({ type: 'newGame', body: result }))
-        })
-      })
+      runQuery(message, db, server, client, 'addGame')
       break
     
     case 'updateGame':
-      db.updateGame(message.body).then(({result, error}) => {
-        if (error) {
-          client.send(JSON.stringify({ type: 'error', body: error}))
-        }
+      runQuery(message, db, server, client, 'updateGame')
+      break
 
-        server.clients.forEach(c => {
-          c.send(JSON.stringify({ type: 'savedGame', body: result }))
-        })
-      })
+    case 'deleteGame':
+      runQuery(message, db, server, client, 'deleteGame')
       break
   }
+}
+
+/**
+ * requests the database service to run a query (addGame, saveGame, updateGame etc) 
+ * @param { string } queryType 
+ */
+function runQuery(message, db, server, client, queryType) {
+  db[queryType](message.body).then(({result, error}) => {
+    if (error) {
+      client.send(JSON.stringify({ type: 'error', body: error}))
+    }
+
+    server.clients.forEach(c => {
+      c.send(JSON.stringify({ type: queryType, body: result }))
+    })
+  })
 }
 
 async function startServer(db) {
