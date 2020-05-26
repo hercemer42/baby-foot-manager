@@ -7,6 +7,7 @@ h1 {
   letter-spacing: 0.5px;
   background-image: linear-gradient(to right, indigo, blue, green, indigo, blue, green);
   background-clip: text;
+  -webkit-background-clip: text;
   color: transparent;
   display: inline-block;
   margin: 10px 0px 15px;

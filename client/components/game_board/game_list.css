@@ -7,4 +7,64 @@
   border: 1px indigo solid;
   border-radius: 5px;
   overflow-y: scroll;
+  font-family: sans-serif;
+}
+
+#gameList li {
+  margin-bottom: 5px;
+}
+
+#gameList input[type="checkbox"] {
+  -webkit-appearance: initial;
+  appearance: initial;
+  width: 20px;
+  height: 20px;
+  font-family: 'sans-serif';
+  border-radius: 0;
+  position: relative;
+  top: 8px;
+  cursor: pointer;
+}
+
+#gameList .finishCheckBox[type="checkbox"] {
+  background: rgb(199, 238, 163);
+  border: thin rgb(50, 50, 50) solid;
+}
+
+#gameList .finishCheckBox[type="checkbox"]:checked {
+  border: thin gray solid;
+  background:
+    linear-gradient(45deg, rgba(0,0,0,0) 0%,rgba(0,0,0,0) 46%,rgb(150, 150, 150) 48%,rgb(150, 150, 150) 52%,rgba(0,0,0,0) 54%,rgba(0,0,0,0) 100%),
+    linear-gradient(135deg, rgb(240, 240, 240) 0%,rgb(240, 240, 240) 46%,rgb(150, 150, 150) 50%,rgb(150, 150, 150) 53%, rgb(240, 240, 240) 53%,rgb(240, 240, 240) 100%);
+}
+
+#gameList .deleteCheckBox[type="checkbox"] {
+  font-size: 14px;
+}
+
+#gameList .deleteCheckBox[type="checkbox"]:after {
+  position: absolute;
+  content: '\274c';
+  position: absolute;
+  color: black;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%,-50%);
+  -moz-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
+
+#gameList .deleteCheckBox[type="checkbox"]:checked {
+  border: thin gray solid;
+}
+
+#gameList .finished {
+  color: gray;
+}
+
+#gameList span {
+  display: inline-block;
+  width: 280px;
+  max-width: 100%;
 }

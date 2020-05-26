@@ -11,7 +11,7 @@ const BfWebSocketService = function() {
         console.log(`Error: ${data.body}`)
         break
       default:
-        console.log(`Message from server: ${JSON.stringify(data.body)}`)
+        console.log(`Message from server: ${JSON.stringify(data)}`)
     }
   })
 
