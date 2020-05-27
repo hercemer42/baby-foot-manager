@@ -1,8 +1,12 @@
 before_script:
-  - psql -c 'create database babyfoot;' -U postgres
+  - export DISPLAY=:99.0
+  - psql -c 'CREATE DATABASE babyfoot;' -U postgres
+  - psql -c "CREATE USER tablesoccer WITH PASSWORD 'travisonly';" -U postgres
+  - psql -c "GRANT ALL PRIVILEGES ON DATABASE babyfoot TO tablesoccer;" -U postgres
 os:
   - linux
-  - osx
+env:
+  - BF_PGPASSWORD=travisonly
 language: node_js
 node_js:
   - 12
@@ -10,11 +14,10 @@ dist: xenial
 sudo: required
 services:
   - xvfb
-before_script:
-  - export DISPLAY=:99.0
+  - postgresql
 install:
   - npm set progress=false
   - npm install
 script:
   - npx eslint ./
-  - ng test
+  - npm test

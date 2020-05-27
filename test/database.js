@@ -36,6 +36,7 @@ describe('Database', () => {
   let savedGameID
 
   before(async() => {
+    console.log('config', config)
     await emptyDatabase()
   })
 
