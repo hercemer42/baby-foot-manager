@@ -1,3 +1,5 @@
+const ip = require('ip').address()
+
 const {
   BF_PGUSER,
   BF_PGHOST,
@@ -19,6 +21,6 @@ module.exports = {
   PGPORT: BF_PGPORT ? BF_PGPORT : 5432,
   HTTP_PORT: BF_HTTP_PORT ? BF_HTTP_PORT : 3000,
   WEBSOCKET_PORT: BF_WEBSOCKET_PORT ? BF_WEBSOCKET_PORT : 8080,
-  EXTERNAL_IP: BF_EXTERNAL_IP ? BF_EXTERNAL_IP : 'localhost',
+  EXTERNAL_IP: BF_EXTERNAL_IP ? BF_EXTERNAL_IP : ip,
   ENV: BF_ENV ? BF_ENV : 'Development'
 }
