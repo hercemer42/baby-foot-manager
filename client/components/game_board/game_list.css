@@ -1,7 +1,7 @@
 #gameList {
-  margin-top: 35px;
+  margin-top: 40px;
   width: 100%;
-  max-width: 597px;
+  max-width: 600px;
   height: 500px;
   max-height: 100%;
   border: 1px indigo solid;
@@ -15,7 +15,7 @@
   margin: -15px 10px;
   padding: 0px 5px 1px;
   display: inline-block;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   border: thin green solid;
   color: indigo;
   background: white;
@@ -69,6 +69,7 @@
 
 #gameList .deleteCheckBox[type="checkbox"] {
   font-size: 14px;
+  border: none;
 }
 
 #gameList .deleteCheckBox[type="checkbox"]:after {

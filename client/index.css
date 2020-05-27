@@ -1,5 +1,6 @@
 body {
   margin-left: 30px;
+  margin-right: 30px;
 }
 
 h1 {
@@ -19,8 +20,20 @@ ul {
   margin-top: 5px;
 }
 
-#gameBoard img {
+img {
   position: relative;
   top: 12px;
   left: 10px;
 }
+
+input {
+  padding: 3px 5px;
+  border-radius: 3px;
+  font-size: 16px;
+}
+
+#gameBoard {
+  max-width: 600px;
+  width: 100%;
+}
+

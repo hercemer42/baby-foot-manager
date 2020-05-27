@@ -3,20 +3,22 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1"> 
   <title>BF Manager</title>
   <meta name="description" content="BabyFoot Manager">
   <meta name="author" content="brian@brianfox.fr">
   <link rel="stylesheet" href="index.css?v=1.0">
   <link rel="stylesheet" href="./components/game_board/new_game.css?v=1.0"/>
   <link rel="stylesheet" href="./components/game_board/game_list.css?v=1.0"/>
+  <link rel="stylesheet" href="mobile.css?v=1.0">
 </head>
 <body>
+  <h1>BabyFoot Manager</h1>
+  <img src="assets/icon.png"/>
   <div id="gameBoard" onsubmit="event.preventDefault()">
-    <h1>BabyFoot Manager</h1>
-    <img src="assets/icon.png"/>
     <form id="newGame">
       <input type="text" placeholder="Joueur 1" required>
-      vs
+      <span>vs</span>
       <input type="text" placeholder="Joueur 2" required>
       <button type='submit'>Nouvelle partie</button>
     </form>

@@ -1,17 +1,27 @@
-input {
-  padding: 3px 5px;
-  border-radius: 3px;
+#newGame input {
+  width: calc(50% - 117px);
 }
 
-#gameBoard input:first-of-type {
+#newGame input:first-of-type {
   margin-right: 6px;
   margin-left: 10px;
 }
 
-#gameBoard input:last-of-type {
+#newGame input:last-of-type {
   margin-left: 6px;
 }
 
-#gameBoard button {
+#newGame button {
   margin-left: 10px;
+  width: 130px;
+  padding: 4px 0px;
+  position: relative;
+  top: -1px;
+  border-radius: 3px;
+  background: rgb(224, 216, 231);
+}
+
+#newGame span {
+  display: inline-block;
+  width: 20px;
 }
