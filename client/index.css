@@ -14,6 +14,17 @@ h1 {
   margin: 10px 0px 20px;
 }
 
+h2 {
+  position: absolute;
+  margin: -15px 10px;
+  padding: 0px 5px 1px;
+  display: inline-block;
+  font-size: 1.4rem;
+  background: white;
+  border-radius: 5px;
+  font-family: "courier";
+}
+
 ul {
   list-style: none;
   padding-left: 0px;
@@ -32,9 +43,14 @@ input {
   font-size: 16px;
 }
 
+#flexContainer {
+  display: flex;
+}
+
 #gameBoard {
   max-width: 600px;
   width: 100%;
+  display: inline-block;
 }
 
 #error {

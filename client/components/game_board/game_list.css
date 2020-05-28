@@ -11,16 +11,8 @@
 }
 
 #gameList h2 {
-  position: absolute;
-  margin: -15px 10px;
-  padding: 0px 5px 1px;
-  display: inline-block;
-  font-size: 1.4rem;
   border: thin green solid;
   color: indigo;
-  background: white;
-  border-radius: 5px;
-  font-family: "courier";
 }
 
 #gameList ul {
@@ -75,7 +67,6 @@
 #gameList .deleteCheckBox[type="checkbox"]:after {
   position: absolute;
   content: '\274c';
-  position: absolute;
   color: black;
   left: 50%;
   top: 50%;

@@ -1,13 +1,13 @@
 # BabyFoot Manager
 [EN](readme.md)/FR
 
-Toujours savoir a qui le tour avec BabyFoot Manager!
+Toujours savoir à qui le tour avec BabyFoot Manager!
 
 Version stable [v1](https://github.com/hercemer42/baby-foot-manager/tree/1)
 
 ## Fonctionalités
 
-* Créer de nouveaux parties
+* Créer des nouvelles parties
 * Suivre a qui le tour
 * Afficher l'historique des parties
 * Mettre à jour l'historique des parties en temps réel

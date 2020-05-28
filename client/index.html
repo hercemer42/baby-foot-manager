@@ -10,30 +10,43 @@
   <link rel="stylesheet" href="index.css?v=1.0">
   <link rel="stylesheet" href="./components/game_board/new_game.css?v=1.0"/>
   <link rel="stylesheet" href="./components/game_board/game_list.css?v=1.0"/>
+  <link rel="stylesheet" href="./components/chat/chat.css?v=1.0"/>
   <link rel="stylesheet" href="mobile.css?v=1.0">
 </head>
 <body>
-  <h1>BabyFoot Manager</h1>
-  <img src="assets/icon.png"/>
-  <div id="gameBoard" onsubmit="event.preventDefault()">
-    <form id="newGame">
-      <input type="text" placeholder="Joueur 1" required>
-      <span>vs</span>
-      <input type="text" placeholder="Joueur 2" required>
-      <button type='submit'>Nouvelle partie</button>
-    </form>
-    <div id="gameList">
-      <h2>Parties en cours: <span></span></h2>
-      <ul></ul>
+  <div id="header">
+    <h1>BabyFoot Manager</h1>
+    <img src="assets/icon.png"/>
+  </div>
+  <div id="flexContainer">
+    <div id="gameBoard">
+      <form id="newGame" onsubmit="event.preventDefault()">
+        <input type="text" placeholder="Joueur 1" required>
+        <span>vs</span>
+        <input type="text" placeholder="Joueur 2" required>
+        <button type='submit'>Nouvelle partie</button>
+      </form>
+      <div id="gameList">
+        <h2>Parties en cours: <span></span></h2>
+        <ul></ul>
+      </div>
+    </div>
+    <div id="chat">
+      <h2>Tchat</h2>
+      <form id="chatSearch" onsubmit="event.preventDefault()">
+        <input type="text" placeholder="Nickname ..."></input>
+      </form>
+    </div>
+    <div id="error">
+      Une erreur de connexion ou de serveur s'est produite. Veuillez contacter un administrateur du système ou réessayer plus tard.
     </div>
   </div>
-  <div id="error">
-    Une erreur de connexion ou de serveur s'est produite. Veuillez contacter un administrateur du système ou réessayer plus tard.
-  </div>
   <script src="config.js"></script>
+  <script src="./services/utils.js?v=1.0"></script>
   <script src="./services/websocket_client.js?v=1.0"></script>
   <script src="./services/http_client.js?v=1.0"></script>
   <script src="./components/game_board/new_game.js?v=1.0"></script>
   <script src="./components/game_board/game_list.js?v=1.0"></script>
+  <script src="./components/chat/chat.js?v=1.0"></script>
 </body>
 </html>

@@ -76,6 +76,17 @@ describe('Database', () => {
     assert.deepEqual(playerNames, ['Player1', 'Player2'])
   })
 
+  it ('Should search for players', async() => {
+    const players = await db.searchPlayers()
+    assert.equal(players.result.length, 2)
+    assert.equal(players.result[0].name, 'Player1')
+  })
+
+  it ('Should search a players', async() => {
+    const player = await db.searchPlayers('Player')
+    assert.equal(player.result[0].name, 'Player1')
+  })
+
   it ('Should get the games', async() => {
     const games = await db.getGames()
     const game = games.result[0]

@@ -6,7 +6,7 @@ const BfHttpService = function() {
   /**
    * http get utility function
    */
-  this.get = function(path) {
+  this.get = function(path, params) {
     return new Promise(function(resolve, reject) {
       var xhr= new XMLHttpRequest()
       xhr.open('GET', API_PATH + path, true)

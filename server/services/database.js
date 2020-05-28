@@ -171,11 +171,36 @@ function endPool() {
   _pool.end()
 }
 
+/**
+ * Search the players table for player names containing the search text (case sensitive)
+ * @param { string } playerName 
+ */
+async function searchPlayers(playerName) {
+  const client = await _pool.connect() 
+
+  try {
+    let result
+
+    if (!playerName) {
+      result = await client.query(`SELECT id, name FROM players`)
+    } else {
+      result = await client.query(`SELECT id, name FROM players WHERE name like $1`, [ '%' + playerName + '%' ])
+    }
+
+    return { result: result.rows }
+  } catch (error) {
+    return { result: null, error: error.stack}
+  } finally {
+    await client.release()
+  }
+}
+
 module.exports = {
   initDb: initDb,
   getGames: getGames,
   addGame: addGame,
   finishGame: finishGame,
   deleteGame: deleteGame,
-  endPool: endPool
+  endPool: endPool,
+  searchPlayers: searchPlayers
 }

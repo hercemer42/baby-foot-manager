@@ -1,0 +1,39 @@
+#chat {
+  margin-left: 30px;
+  display: inline-block;
+  width: 100px;
+  max-width: 350px; 
+  max-height: 100%;
+  border: thin green solid;
+  border-radius: 5px;
+  flex: auto;
+}
+
+#chat h2 {
+  border: thin indigo solid;
+  color: green;
+}
+
+#chatSearch {
+  max-width: 100%;
+}
+
+#chat input {
+  margin-top: 30px;
+  margin-left: 10px;
+  margin-right: 20px;
+  padding-right: 24px;
+  width: calc(100% - 20px);
+  box-sizing: border-box;
+}
+
+#chatSearch {
+  position: relative;
+}
+
+#chatSearch:after {
+  content: '\1F50D';
+  position: absolute;
+  right: 16px;
+  top: 35px;
+}
