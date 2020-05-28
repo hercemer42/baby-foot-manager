@@ -1,4 +1,5 @@
 # BabyFoot Manager technical spec
+EN/[FR](spec_fr.md)
 
 ## 1  Description
 BabyFoot Manager is a Rich Web Application that allows to create rounds of BabyFoot in a collaborative manner.
@@ -19,7 +20,7 @@ Adds a realtime chat service with the following features:
 
 * Display the chat history.
 * Update the chat in realtime.
-* Allow for the player to create their alias by typing it in, with a typeahead that automatically searches the existing entries.
+* Allow for the players to create their alias by typing it in, with a typeahead that automatically searches the existing entries.
 
 ### 2.2 V3
 Adds a leaderboard and scoring system.
@@ -44,11 +45,11 @@ The server architecture will consist of the main process, a database connector, 
 * Test OS (CI): OSX
 
 #### 3.2.1.1  OS Dependencies
-* Node version - 12.16.3 LTS
+* Node 12.16.3 LTS
 * PostgreSQL 9.6
 
 ### 3.3  Client
-Vanilla Javascript, HTML, and CSS using the native WebSocket and Date APIs with the ES5 and HTML5 standards, using a functional programming style.  Utility scripts will be used to abstract repetitive tasks such as communications protocols and DOM manipulation.  LocalStorage will be used to remember the player alias for the chat system.
+Vanilla Javascript, HTML, and CSS using the native WebSocket and Date APIs with the ES5 and HTML5 standards, using a functional programming style.  Utility scripts will be used to abstract repetitive tasks such as communications protocols.  LocalStorage will be used to remember the player alias for the chat system.
 
 #### 3.3.1  Design
 Design will be minimalist and responsive, using color and visual cues as much as possible to impart information to the user, and avoid unecessary text.  The app will scale responsively.
@@ -69,19 +70,19 @@ The Browser-Sync, gulp-nodemon and Gulp modules will be used during development 
 #### 3.4.2  Test
 Full test coverage will not be attempted.  We will focus on those elements likely to break:
 
-* Testing of backend service modules and API data coherence with Mocha and Chai.
-* Basic front end e2e testing using WebDriverIO to insure page load and rendering of the main elements.
+* Testing of the backend database service and API data coherence with Mocha.
+* Basic front end e2e testing using Cypress to insure page load and rendering of the main elements.
 
 #### 3.4.3  Linting
-ESLint using the AirBnB standard.
+ESLint
 
 #### 3.4.4  Source control
-Git and Github
+Git et Github
 
 ### 4  Communications architecture
 Communications will be in realtime, allowing for the web client to update without page refresh.
 
-On client page load, first the WebSocket connection will be established with the server so that the latest messages can be recieved. Then a HTTP call will be made to get the historical data.  If a message is recieved in the time between the HTTP request and response, the duplicate data will be removed from the HTTP response.  Any further messages will be provided by the WebSocket connection.  This will take advantage of the benefits of both protocols while avoiding any data loss.
+On client page load, first the WebSocket connection will be established with the server so that the latest messages can be recieved. Then a HTTP call will be made to get the historical data.  Any further messages will be provided by the WebSocket connection.  This will take advantage of the benefits of both protocols while avoiding any data loss.
 
 Persisting data will be achieved over the WebSocket connection.  Any persisted data will immediately be pushed to all active connections.
 
