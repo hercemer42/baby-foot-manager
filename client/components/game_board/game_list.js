@@ -42,9 +42,8 @@
   })
 
   // create an incoming event router by subscibing to webSocket events
-  bfWebSocketService.socket.onmessage = function(event){
+  bfWebSocketService.socket.addEventListener('message', function(event){
     const data = JSON.parse(event.data)
-
     switch(data.type) {
       case 'addGame' :
         addGame(data.body)
@@ -56,7 +55,7 @@
         deleteGameWithVisualEffect(data.body)
         break
     }
-  }
+  })
 
   /**
    * Add a new game to the DOM

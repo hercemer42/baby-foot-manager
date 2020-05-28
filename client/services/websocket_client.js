@@ -3,19 +3,28 @@
 const BfWebSocketService = function() {
   this.socket = new WebSocket('ws://' + BF_CLIENT_CONFIG.SERVER_IP + ':' + BF_CLIENT_CONFIG.WEBSOCKET_PORT)
 
+  function displayErrorMessage() {
+    const errorElement = document.getElementById('error')
+    errorElement.style.display = 'block'
+
+    setTimeout(() => {
+      errorElement.style.display = 'none'
+    }, 5000);
+  }
+
   // listen for errors
   this.socket.onmessage = function(event){
     const data = JSON.parse(event.data)
 
     if (data.type === 'error') {
       console.error('Error: ' + data.body)
-      // @TODO display something on error
+      displayErrorMessage()
     }
   }
 
   this.socket.onerror = function(event) {
     console.error('The following error occured:  ' + event);
-    // @TODO display something on error
+    displayErrorMessage()
   }
 
   this.sendMessage = function(type, body) {
