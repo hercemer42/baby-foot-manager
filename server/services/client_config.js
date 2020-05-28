@@ -2,6 +2,7 @@
  * Creates the client configuration file so that it can be controlled
  * by the server admin through environment variables.
  */
+'use strict'
 const fs = require('fs')
 const path = require('path')
 const { EXTERNAL_IP, WEBSOCKET_PORT, HTTP_PORT } = require('../config.js')

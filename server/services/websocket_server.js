@@ -1,3 +1,4 @@
+'use strict'
 const WebSocket = require('ws')
 const { WEBSOCKET_PORT } = require('../config.js')
 
@@ -18,8 +19,8 @@ function messageRouter(message, db, server, client) {
 }
 
 /**
- * requests the database service to run a query (addGame, saveGame, finishGame etc) 
- * @param { string } queryType 
+ * asks the database service to run a query
+ * @param { string } queryType addGame, saveGame or finishGame
  */
 function runQuery(message, db, server, client, queryType) {
   db[queryType](message.body).then(({result, error}) => {
@@ -33,6 +34,10 @@ function runQuery(message, db, server, client, queryType) {
   })
 }
 
+/**
+ * start the websocket server 
+ * @param { object } db 
+ */
 async function startServer(db) {
   const server = await new WebSocket.Server({ port: WEBSOCKET_PORT })
 

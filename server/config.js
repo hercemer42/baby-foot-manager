@@ -1,3 +1,4 @@
+'use strict'
 const ip = require('ip').address()
 
 const {

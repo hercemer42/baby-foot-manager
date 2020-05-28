@@ -1,3 +1,4 @@
+'use strict'
 const { Pool } = require('pg')
 const schema = require('./schema')
 
@@ -160,9 +161,9 @@ async function createPlayer(player, client) {
 
   if (!existing.rows.length) {
     const newPlayer = await client.query(`INSERT INTO players (id, name) VALUES (nextval('players_id_seq'), $1) RETURNING id`, [ player ])
-    console.log('here', newPlayer)
     return newPlayer.rows[0].id
   }
+
   return existing.rows[0].id
 }
 

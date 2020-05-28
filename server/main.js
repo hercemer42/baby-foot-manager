@@ -1,3 +1,4 @@
+'use strict'
 const db = require('./services/database.js')
 const http_server = require('./services/http_server.js')
 const client_config = require('./services/client_config.js')

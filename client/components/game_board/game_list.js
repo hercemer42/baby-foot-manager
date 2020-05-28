@@ -1,7 +1,7 @@
 (function () {
   'use strict'
   // keep a marker of the last active game position in the list as a reference for when adding new elements
-  let lastActiveGameIndex = -1
+  var lastActiveGameIndex = -1
 
   // get the list of game elements
   const gameListContainer = document.getElementById('gameList')
@@ -13,7 +13,7 @@
   })
 
   /**
-   * Add a listener to the gamelist.
+   * Add a listener to the game list.
    * There is only one listener which uses the target element class and data attribute to determine the outcome.
    * This avoids having to register a listener on each game in the list.
    */
@@ -58,6 +58,10 @@
     }
   }
 
+  /**
+   * Add a new game to the DOM
+   * @param { object } gameData 
+   */
   function addGame(gameData) {
     const newGameElement = buildNewGameElement(gameData) 
     const tempClass = gameData.active ? 'newGame' : 'finishedGame'
@@ -66,7 +70,7 @@
 
     gameList.insertBefore(newGameElement, gameList.children[insertIndex])
     // briefly color newly arrived games so that the user can distinguish them
-    setTimeout(() => {
+    setTimeout(function() {
       newGameElement.classList.remove(tempClass)
     }, 300);
 
@@ -76,6 +80,10 @@
     }
   }
 
+  /**
+   * Check a game off as finished 
+   * @param { object } gameData 
+   */
   function finishGame(gameData) {
     const gameElementToDelete = gameList.querySelectorAll("[data-id='" + gameData.id + "']")[0]
     const textElement = gameElementToDelete.getElementsByTagName('span')[0]
@@ -152,6 +160,10 @@
     updateGameCounter()
   }
 
+  /**
+   * Construct a new game element 
+   * @param { object } gameData 
+   */
   function buildNewGameElement(gameData) {
     var newGameElement = document.createElement('li')
     newGameElement.setAttribute('data-id', gameData.id)
@@ -168,6 +180,9 @@
     return newGameElement
   }
 
+  /**
+   * Construct a delete check box element
+   */
   function buildDeleteCheckBox() {
     var deleteCheckBox = document.createElement('input')
     deleteCheckBox.type = "checkbox"
