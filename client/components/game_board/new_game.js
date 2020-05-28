@@ -8,25 +8,15 @@
   const player2Input  = playerInputs[1]
   const addGameButton  = newGame.getElementsByTagName('button')[0]
 
-  // declare the bindings
-  var player1 = player1Input.value
-  var player2 = player2Input.value
+  createPlayerSearch(player1Input)
+  createPlayerSearch(player2Input)
 
-  // add the listeners
-  player1Input.addEventListener('keyup', function(event) {
-    player1 = event.target.value
-  })
-
-  player2Input.addEventListener('keyup', function(event) {
-    player2 = event.target.value
-  })
-  
   // add the game on form submit
   addGameButton.addEventListener('click', function() {
-    if (!player1 || !player2) {
+    if (!player1Input.value || !player2Input.value) {
       return
     }
 
-    bfWebSocketService.sendMessage('addGame', { player1: player1, player2: player2 })
+    bfWebSocketService.sendMessage('addGame', { player1: player1Input.value, player2: player2Input.value })
   })
 })()

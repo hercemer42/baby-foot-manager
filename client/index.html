@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="index.css?v=1.0">
   <link rel="stylesheet" href="./components/game_board/new_game.css?v=1.0"/>
   <link rel="stylesheet" href="./components/game_board/game_list.css?v=1.0"/>
+  <link rel="stylesheet" href="./components/player_search/player_search.css?v=1.0"/>
   <link rel="stylesheet" href="./components/chat/chat.css?v=1.0"/>
   <link rel="stylesheet" href="mobile.css?v=1.0">
 </head>
@@ -21,9 +22,13 @@
   <div id="flexContainer">
     <div id="gameBoard">
       <form id="newGame" onsubmit="event.preventDefault()">
-        <input type="text" placeholder="Joueur 1" required>
+        <div class="playerSearch">
+          <input type="text" placeholder="Joueur 1" required>
+        </div>
         <span>vs</span>
-        <input type="text" placeholder="Joueur 2" required>
+        <div class="playerSearch">
+          <input type="text" placeholder="Joueur 2" required>
+        </div>
         <button type='submit'>Nouvelle partie</button>
       </form>
       <div id="gameList">
@@ -33,8 +38,10 @@
     </div>
     <div id="chat">
       <h2>Tchat</h2>
-      <form id="chatSearch" onsubmit="event.preventDefault()">
-        <input type="text" placeholder="Nickname ..."></input>
+      <form id="chatPlayer" onsubmit="event.preventDefault()">
+        <div class="playerSearch">
+          <input type="text" placeholder="Nickname ..."></input>
+        </div>
       </form>
     </div>
     <div id="error">
@@ -42,9 +49,9 @@
     </div>
   </div>
   <script src="config.js"></script>
-  <script src="./services/utils.js?v=1.0"></script>
   <script src="./services/websocket_client.js?v=1.0"></script>
   <script src="./services/http_client.js?v=1.0"></script>
+  <script src="./components/player_search/player_search.js?v=1.0"></script>
   <script src="./components/game_board/new_game.js?v=1.0"></script>
   <script src="./components/game_board/game_list.js?v=1.0"></script>
   <script src="./components/chat/chat.js?v=1.0"></script>

@@ -1,13 +1,15 @@
-#newGame input {
-  width: calc(50% - 117px);
+#newGame div {
+  display: inline-block;
+  width: calc(50% - 105px);
+  position: relative;
 }
 
-#newGame input:first-of-type {
+#newGame div:first-of-type {
   margin-right: 6px;
   margin-left: 10px;
 }
 
-#newGame input:last-of-type {
+#newGame div:last-of-type {
   margin-left: 6px;
 }
 
@@ -19,6 +21,7 @@
   top: -1px;
   border-radius: 3px;
   background: rgb(224, 216, 231);
+  outline: none;
 }
 
 #newGame span {

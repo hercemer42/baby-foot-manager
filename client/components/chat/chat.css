@@ -14,26 +14,11 @@
   color: green;
 }
 
-#chatSearch {
-  max-width: 100%;
-}
-
-#chat input {
+#chatPlayer input {
   margin-top: 30px;
-  margin-left: 10px;
-  margin-right: 20px;
-  padding-right: 24px;
-  width: calc(100% - 20px);
-  box-sizing: border-box;
 }
 
-#chatSearch {
-  position: relative;
-}
-
-#chatSearch:after {
-  content: '\1F50D';
-  position: absolute;
-  right: 16px;
+#chatPlayer .playerSearch:after {
   top: 35px;
 }
+
