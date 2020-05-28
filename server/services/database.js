@@ -50,8 +50,8 @@ async function _getGame(client, gameId) {
     FROM games g
     INNER JOIN players p ON g.player1 = p.id
     INNER JOIN players p2 ON g.player2 = p2.id
-    WHERE g.id = ${gameId}
-  `)
+    WHERE g.id = $1
+  `, [ gameId ])
 }
 
 async function getGames() {
@@ -100,13 +100,13 @@ async function addGame(data) {
       ) VALUES (
         nextval('games_id_seq'),
         true,
-        ${player1id},
-        ${player2id},
+        $1,
+        $2,
         current_timestamp,
         current_timestamp
       )
       RETURNING id
-    `)
+    `, [ player1id, player2id])
 
     const result = await _getGame(client, newGameID.rows[0].id)
     return { result: result.rows[0] }
@@ -123,9 +123,9 @@ async function finishGame(data) {
   try {
     const updatedGame = await client.query(`
       UPDATE games SET active = false, updated_at = current_timestamp
-      WHERE games.id = ${data.id}
+      WHERE games.id = $1
       RETURNING id
-    `)
+    `, [ data.id ])
 
     const result = await _getGame(client, updatedGame.rows[0].id)
 
@@ -141,7 +141,7 @@ async function deleteGame(data) {
   const client = await _pool.connect() 
 
   try {
-    await client.query(`DELETE FROM games WHERE id = ${data.id}`)
+    await client.query(`DELETE FROM games WHERE id = $1`, [ data.id ])
     return { result: data.id }
   } catch (error) {
     return { result: null, error: error.stack}
@@ -156,13 +156,13 @@ async function deleteGame(data) {
  * @returns { number } the player id
  */
 async function createPlayer(player, client) {
-  const existing = await client.query(`SELECT id, name FROM players WHERE name = '${player}'`)
+  const existing = await client.query(`SELECT id, name FROM players WHERE name = $1`, [ player ])
 
   if (!existing.rows.length) {
-    const newPlayer = await client.query(`INSERT INTO players (id, name) VALUES (nextval('players_id_seq'), '${player}') RETURNING id`)
+    const newPlayer = await client.query(`INSERT INTO players (id, name) VALUES (nextval('players_id_seq'), $1) RETURNING id`, [ player ])
+    console.log('here', newPlayer)
     return newPlayer.rows[0].id
   }
-
   return existing.rows[0].id
 }
 
