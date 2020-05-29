@@ -1,12 +1,13 @@
 #chat {
   margin-left: 30px;
-  display: inline-block;
   width: 100px;
   max-width: 350px; 
   max-height: 100%;
   border: thin green solid;
   border-radius: 5px;
   flex: auto;
+  display: flex;
+  flex-flow: column;
 }
 
 #chat h2 {
@@ -14,18 +15,58 @@
   color: green;
 }
 
-#chatPlayer input {
+#chat .playerSearch input {
   margin: 30px 20px 0px 10px;
   width: calc(100% - 20px);
 }
 
-#chatPlayer .playerSearch:after {
+#chat .playerSearch:after {
   top: 35px;
 }
 
-#chatPlayer .playerSearch ul {
+#chat .playerSearch ul {
   width: calc(100% - 20px);
   margin-left: 10px;
   margin-right: 10px;
 }
 
+#chat > ul {
+  height: 100%;
+  margin: 9px 10px 0px 10px;
+  border: thin rgb(206, 138, 255) solid;
+  padding-top: 5px;
+  background: rgb(253, 250, 255);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  box-sizing: border-box;
+  flex: auto;
+  overflow-y: auto;
+  font-size: 15px;
+}
+
+#chat li span:first-of-type {
+  color: green
+}
+
+#chat li span:last-of-type {
+  color: indigo
+}
+
+#chat > ul li {
+  margin-left: 10px;
+  margin-top: 7px;
+}
+
+#chat li.unknownPlayer span {
+  color: gray
+}
+
+#messageBox {
+  margin: -1px 10px 10px 10px;
+  border: thin rgb(206, 138, 255) solid;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  font-size: 14px;
+}

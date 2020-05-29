@@ -82,7 +82,7 @@ describe('Database', () => {
     assert.equal(players.result[0].name, 'Player1')
   })
 
-  it ('Should search a players', async() => {
+  it ('Should search for a player', async() => {
     const player = await db.searchPlayers('Player')
     assert.equal(player.result[0].name, 'Player1')
   })
@@ -108,4 +108,15 @@ describe('Database', () => {
     const games = await db.getGames()
     assert.equal(games.result.length, 0)
   })
+
+  it('Should add a message', async() => {
+    const messageData = { player: 'MessagePlayer', message: 'Blah blah message' }
+    const message = await db.newMessage(messageData)
+    const player = await db.searchPlayers('MessagePlayer')
+
+    assert.equal(message.result.player, 'MessagePlayer')
+    assert.equal(message.result.message, 'Blah blah message')
+    assert.equal(player.result[0].name, 'MessagePlayer')
+  })
+
 });

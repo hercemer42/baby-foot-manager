@@ -1,37 +1,34 @@
 'use strict'
 const WebSocket = require('ws')
 const { WEBSOCKET_PORT } = require('../config.js')
+const QUERY_TYPES = [ 'addGame', 'deleteGame', 'finishGame', 'newMessage' ]
 
-function messageRouter(message, db, server, client) {
-  switch (message.type) {
-    case 'addGame':
-      runQuery(message, db, server, client, 'addGame')
-      break
-    
-    case 'finishGame':
-      runQuery(message, db, server, client, 'finishGame')
-      break
-
-    case 'deleteGame':
-      runQuery(message, db, server, client, 'deleteGame')
-      break
+async function messageRouter(message, db, server, client) {
+  if (!QUERY_TYPES.includes(message.type)) {
+    client.send(JSON.stringify({ type: 'error', body: `Message type ${message.type} is unsupported`}))
+    return
   }
+
+  let result = await runQuery(message, db, message.type)
+
+  if (result.error) {
+    client.send(JSON.stringify({ type: 'error', body: result.error }))
+    return
+  }
+
+  server.clients.forEach(c => {
+    c.send(JSON.stringify({ type: message.type, body: result.result }))
+  })
 }
 
 /**
  * asks the database service to run a query
  * @param { string } queryType addGame, saveGame or finishGame
+ * @param { object } db the database connection
+ * @param { queryType } string the query type
  */
-function runQuery(message, db, server, client, queryType) {
-  db[queryType](message.body).then(({result, error}) => {
-    if (error) {
-      client.send(JSON.stringify({ type: 'error', body: error}))
-    }
-
-    server.clients.forEach(c => {
-      c.send(JSON.stringify({ type: queryType, body: result }))
-    })
-  })
+async function runQuery(message, db, queryType) {
+  return await db[queryType](message.body).then( result => result )
 }
 
 /**

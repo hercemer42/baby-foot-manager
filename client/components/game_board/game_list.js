@@ -85,6 +85,7 @@
    */
   function finishGame(gameData) {
     const gameElementToDelete = gameList.querySelectorAll("[data-id='" + gameData.id + "']")[0]
+    console.log('game', gameList, gameData.id)
     const textElement = gameElementToDelete.getElementsByTagName('span')[0]
     const finishCheckBox = gameElementToDelete.getElementsByClassName('finishCheckBox')[0]
     gameElementToDelete.classList.add('finishedGame')

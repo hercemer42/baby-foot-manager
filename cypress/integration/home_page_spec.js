@@ -14,4 +14,11 @@ describe('The Home Page', () => {
     cy.wait(100)
     cy.get('#gameList').get('li').first().contains('CypressPlayer1 vs CypressPlayer2')
   })
+
+  it ('Sends a message', () => {
+    cy.get('#chat .playerSearch input').first().type('CypressMessager{enter}')
+    cy.wait(100)
+    cy.get('#messageBox').type('Cypress test message{enter}')
+    cy.get('#chat > ul').get('li').last().contains(' : Cypress test message')
+  })
 })

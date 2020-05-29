@@ -151,6 +151,59 @@ async function deleteGame(data) {
   }
 }
 
+async function newMessage(data) {
+  const client = await _pool.connect() 
+  const playerId = await createPlayer(data.player, client)
+
+  try {
+    const newMessageID = await client.query(`INSERT INTO chat (
+      id, message, player, created_at
+    ) VALUES (
+      nextval('chat_id_seq'), $1, $2, current_timestamp
+    )
+    RETURNING id`, [ data.message, playerId ])
+
+    const result = await getMessages(newMessageID.rows[0].id)
+    return { result: result.result[0], error: result.error }
+  } catch (error) {
+    return { result: null, error: error.stack}
+  } finally {
+    await client.release()
+  }
+}
+
+/**
+ * @param { number } messageId optional to get just one message 
+ */
+async function getMessages(messageId) {
+  const client = await _pool.connect() 
+
+  try {
+    let whereClause = ''
+    const params = []
+
+    if (messageId) {
+      whereClause = `WHERE c.id = $1`
+      params.push(messageId)
+    }
+
+    let query = `
+      SELECT c.id, c.message, p.name as player, c.created_at
+      FROM chat c
+      INNER JOIN players p ON c.player = p.id
+      ${whereClause}
+      ORDER BY c.created_at DESC LIMIT 10
+    `
+
+    const result = await client.query(query, params)
+    return { result: result.rows, error: null }
+  } catch (error) {
+    return { result: null, error: error.stack}
+  } finally {
+    await client.release()
+  }
+}
+
 /**
  * Create the player if it doesn't already exist 
  * @param { string } player
@@ -202,5 +255,7 @@ module.exports = {
   finishGame: finishGame,
   deleteGame: deleteGame,
   endPool: endPool,
-  searchPlayers: searchPlayers
+  searchPlayers: searchPlayers,
+  newMessage: newMessage,
+  getMessages: getMessages
 }

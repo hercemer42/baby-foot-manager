@@ -5,7 +5,7 @@
  * Note: The input must be the only element inside its parent.
  * 
  * @param { object } input the input element on which to attach the search service
- * @param { object } options { no_search_icon: true }
+ * @param { object } options { no_search_icon: true, on_enter: callback }
  */
 function createPlayerSearch(input, options = {}){
   var dropDownElement = createDropDownElement(input, options.no_search_icon)
@@ -23,6 +23,14 @@ function createPlayerSearch(input, options = {}){
       input.value = input.value.trim()
       browseToDropDown(dropDownElement)
       return
+    }
+
+    // optional callback on enter
+    if (event.keyCode == 13) {
+
+      if (options.on_enter) {
+        options.on_enter()
+      }
     }
 
     // don't show the dropdown on enter or tab
