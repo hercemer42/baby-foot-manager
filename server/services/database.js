@@ -188,7 +188,7 @@ async function getMessages(messageId) {
     }
 
     let query = `
-      SELECT c.id, c.message, p.name as player, c.created_at
+      SELECT c.id, c.message, p.name as player, p.icon as player_icon, c.created_at
       FROM chat c
       INNER JOIN players p ON c.player = p.id
       ${whereClause}
@@ -210,10 +210,12 @@ async function getMessages(messageId) {
  * @returns { number } the player id
  */
 async function createPlayer(player, client) {
-  const existing = await client.query(`SELECT id, name FROM players WHERE name = $1`, [ player ])
+  const existing = await client.query(`SELECT id, name, icon FROM players WHERE name = $1`, [ player ])
 
   if (!existing.rows.length) {
-    const newPlayer = await client.query(`INSERT INTO players (id, name) VALUES (nextval('players_id_seq'), $1) RETURNING id`, [ player ])
+    const newPlayer = await client.query(`
+      INSERT INTO players (id, name, icon) VALUES (nextval('players_id_seq'), $1, nextval('players_icon_seq')) RETURNING id
+    `, [ player ])
     return newPlayer.rows[0].id
   }
 
@@ -235,9 +237,9 @@ async function searchPlayers(playerName) {
     let result
 
     if (!playerName) {
-      result = await client.query(`SELECT id, name FROM players`)
+      result = await client.query(`SELECT id, name, icon FROM players`)
     } else {
-      result = await client.query(`SELECT id, name FROM players WHERE name ILIKE $1`, [ '%' + playerName + '%' ])
+      result = await client.query(`SELECT id, name, icon FROM players WHERE name ILIKE $1`, [ '%' + playerName + '%' ])
     }
 
     return { result: result.rows }

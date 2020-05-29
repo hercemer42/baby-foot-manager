@@ -5,7 +5,7 @@
  * Note: The input must be the only element inside its parent.
  * 
  * @param { object } input the input element on which to attach the search service
- * @param { object } options { no_search_icon: true, on_enter: callback }
+ * @param { object } options { no_search_icon: true, on_enter: callback, on_search: callback, on_select: callback }
  */
 function createPlayerSearch(input, options = {}){
   var dropDownElement = createDropDownElement(input, options.no_search_icon)
@@ -46,6 +46,10 @@ function createPlayerSearch(input, options = {}){
     }
 
     searchWithDebounce(input, 250).then(function(players) {
+      // optional on_search callback
+      if (options.on_search) {
+        options.on_search(players)
+      }
       /**
        * Don't build the list if the input is empty, or the last key code is enter, tab or escape.
        * This is so to cover the scenario where the results for the previous keystroke arrive
@@ -88,20 +92,27 @@ function createPlayerSearch(input, options = {}){
   dropDownElement.addEventListener('keyup', function(event) {
     const activeElement = document.activeElement
 
+    // down arrow event
     if (event.keyCode == 40) {
       browseDown(dropDownElement, activeElement, 'down')
       return
     }
 
+    // up arrow event
     if (event.keyCode == 38) {
       browseUp(dropDownElement, activeElement, 'up')
       return
     }
 
+    // enter or space event
     if (event.keyCode == 30 || event.keyCode == 13) {
       input.value = activeElement.innerHTML
       input.focus()
       dropDownElement.style.display = 'none'
+
+      if (options.on_select) {
+        options.on_select(activeElement.icon)
+      }
     }
   })
 
@@ -135,6 +146,7 @@ function createPlayerSearch(input, options = {}){
       var playerElement = document.createElement('li')
       playerElement.innerHTML = player.name
       playerElement.tabIndex = index + 1
+      playerElement.icon = player.icon
       dropDownElement.appendChild(playerElement)
     })
   }

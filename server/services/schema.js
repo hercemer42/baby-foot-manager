@@ -4,9 +4,10 @@ module.exports = [
     table: "players",
     columns: [
       "id INTEGER PRIMARY KEY",
-      "name TEXT UNIQUE NOT NULL"
+      "name TEXT UNIQUE NOT NULL",
+      "icon INTEGER NOT NULL"
     ],
-    sequences: [ "players_id_seq" ]
+    sequences: [ "players_id_seq", "players_icon_seq MAXVALUE 112 CYCLE" ]
   },
   {
     table: "games",
