@@ -1,3 +1,5 @@
 node_modules
 client/config.js
 cypress/**/*.mp4
+cypress/fixtures
+cypress/screenshots

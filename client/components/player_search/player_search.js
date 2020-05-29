@@ -5,9 +5,17 @@
  * Note: The input must be the only element inside its parent.
  * 
  * @param { object } input the input element on which to attach the search service
+ * @param { object } options { no_search_icon: true }
  */
-function createPlayerSearch(input){
-  var dropDownElement = createDropDownElement(input)
+function createPlayerSearch(input, options = {}){
+  var dropDownElement = createDropDownElement(input, options.no_search_icon)
+  // record the last keyCode to be registered
+  var lastKeyCode
+
+  input.addEventListener('keydown', function(event) {
+    lastKeyCode = event.keyCode
+  })
+
   // search for the player names on keyup
   input.addEventListener('keyup', function(event) {
     // give focus to the first element in the dropDown on pressing the down arrow
@@ -19,10 +27,34 @@ function createPlayerSearch(input){
 
     // don't show the dropdown on enter or tab
     if (event.keyCode == 13 || event.keyCode == 9) {
+      dropDownElement.style.display = 'none'
       return 
     }
 
-    build(input, dropDownElement)
+    // hide the dropdown on escape or when the input is empty
+    if (event.keyCode == 27 || !input.value ) {
+      dropDownElement.style.display = 'none'
+      return
+    }
+
+    searchWithDebounce(input, 250).then(function(players) {
+      /**
+       * Don't build the list if the input is empty, or the last key code is enter, tab or escape.
+       * This is so to cover the scenario where the results for the previous keystroke arrive
+       * after the display has been hidden.
+       */
+      if ([ 13, 9, 27 ].includes(lastKeyCode) || !input.value) {
+        return
+      }
+
+      // Don't show the list if the input if there is only one element in the search results and it matches exactly the input value 
+      if (players.length === 1 && players[0].name === input.value) {
+        dropDownElement.style.display = 'none'
+        return
+      }
+
+      addPlayersToList(players, dropDownElement)
+    })
   })
 
   // hide the dropDown on input blur (unless the dropDown has focus)
@@ -69,23 +101,16 @@ function createPlayerSearch(input){
    * Creates a dropDown list container and adds it to the input
    * @param { object } input the input element
    */
-  function createDropDownElement(input) {
+  function createDropDownElement(input, no_search_icon) {
     const dropDownElement = document.createElement('ul')
-    input.parentElement.appendChild(dropDownElement)
+    const parentElement = input.parentElement
+    parentElement.appendChild(dropDownElement)
+
+    if (no_search_icon) {
+      parentElement.classList.add('no_search_icon')
+    }
+
     return dropDownElement
-  }
-
-  /**
-   * Add the player names to the list element
-   * @param { object } input the input element
-   * @param { object } dropDownElement the dropDown element
-   */
-  function build(input, dropDownElement) {
-    const searchPromise = searchWithDebounce(input, 250)
-
-    searchPromise.then(function(players) {
-      addPlayersToList(players, dropDownElement)
-    })
   }
 
   /**

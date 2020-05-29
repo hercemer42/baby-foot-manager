@@ -3,7 +3,8 @@ module.exports = {
     "bfHttpService": "readonly",
     "bfWebSocketService": "readonly",
     "BF_CLIENT_CONFIG": "readonly",
-    "Promise": "readonly"
+    "Promise": "readonly",
+    "createPlayerSearch": "readonly"
   },
   "rules": {
       "no-unused-vars": [1]

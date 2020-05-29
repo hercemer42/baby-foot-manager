@@ -8,10 +8,10 @@ describe('The Home Page', () => {
   })
 
   it ('Creates a game', () => {
-    cy.get('input').first().type('CypressPlayer1')
-    cy.get('input').last().type('CypressPlayer2')
+    cy.get('#gameBoard input').first().type('CypressPlayer1')
+    cy.get('#gameBoard input').last().type('CypressPlayer2')
     cy.get('button').click()
     cy.wait(100)
-    cy.get('li').first().contains('CypressPlayer1 vs CypressPlayer2')
+    cy.get('#gameList').get('li').first().contains('CypressPlayer1 vs CypressPlayer2')
   })
 })

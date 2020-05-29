@@ -172,7 +172,7 @@ function endPool() {
 }
 
 /**
- * Search the players table for player names containing the search text (case sensitive)
+ * Search the players table for player names containing the search text
  * @param { string } playerName 
  */
 async function searchPlayers(playerName) {
@@ -184,7 +184,7 @@ async function searchPlayers(playerName) {
     if (!playerName) {
       result = await client.query(`SELECT id, name FROM players`)
     } else {
-      result = await client.query(`SELECT id, name FROM players WHERE name like $1`, [ '%' + playerName + '%' ])
+      result = await client.query(`SELECT id, name FROM players WHERE name ILIKE $1`, [ '%' + playerName + '%' ])
     }
 
     return { result: result.rows }

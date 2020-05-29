@@ -15,10 +15,17 @@
 }
 
 #chatPlayer input {
-  margin-top: 30px;
+  margin: 30px 20px 0px 10px;
+  width: calc(100% - 20px);
 }
 
 #chatPlayer .playerSearch:after {
   top: 35px;
+}
+
+#chatPlayer .playerSearch ul {
+  width: calc(100% - 20px);
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
