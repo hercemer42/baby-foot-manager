@@ -3,3 +3,6 @@ client/config.js
 cypress/**/*.mp4
 cypress/fixtures
 cypress/screenshots
+cypress/plugins
+cypress/support
+cypress/videos
