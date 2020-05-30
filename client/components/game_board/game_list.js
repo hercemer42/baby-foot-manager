@@ -111,7 +111,7 @@
     const gameElementToDelete = gameList.querySelector("[data-id='" + id + "']")
     gameElementToDelete.classList.add('deletedGame')
 
-    setTimeout(() => {
+    setTimeout(function() {
       deleteGame(id) 
     }, 150);
   }

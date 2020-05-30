@@ -15,6 +15,7 @@ const BfHttpService = function() {
         if(xhr.status === 200) {
           resolve(JSON.parse(xhr.responseText))
         } else {
+          bfErrorService.displayErrorMessage()
           reject(xhr.status)
         }
       } 
