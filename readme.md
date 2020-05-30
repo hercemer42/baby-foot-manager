@@ -3,7 +3,7 @@ EN/[FR](readme_fr.md)
 
 Always know whose turn it is with the BabyFoot (Fussball) Manager!
 
-Stable version [v1](https://github.com/hercemer42/baby-foot-manager/tree/1)
+Stable version [v2](https://github.com/hercemer42/baby-foot-manager/tree/2)
 
 ## Features
 
@@ -11,6 +11,7 @@ Stable version [v1](https://github.com/hercemer42/baby-foot-manager/tree/1)
 * Track whose turn it is
 * View the game history
 * Update the game history in real time
+* Real time chat service
 * Works on mobile or in the browser
 
 ## Installation
@@ -18,8 +19,8 @@ Stable version [v1](https://github.com/hercemer42/baby-foot-manager/tree/1)
 ### Prerequisites
 
   - Node 12.16
-  - PostgreSQL 9.6
-  - Linux or OSX (currently untested on OSX)
+  - PostgreSQL 9.6 (Other versions may work, untested)
+  - Linux or OSX (Currently OSX testing run with Travis only)
   
 ### Set up the database
 

@@ -3,7 +3,7 @@
 
 Toujours savoir à qui le tour avec BabyFoot Manager!
 
-Version stable [v1](https://github.com/hercemer42/baby-foot-manager/tree/1)
+Version stable [v2](https://github.com/hercemer42/baby-foot-manager/tree/2)
 
 ## Fonctionalités
 
@@ -11,6 +11,7 @@ Version stable [v1](https://github.com/hercemer42/baby-foot-manager/tree/1)
 * Suivre a qui le tour
 * Afficher l'historique des parties
 * Mettre à jour l'historique des parties en temps réel
+* Service de chat en temps réel
 * Fonctionne sur des appareils mobile ou dans le navigateur
 
 ## Installation
@@ -18,8 +19,8 @@ Version stable [v1](https://github.com/hercemer42/baby-foot-manager/tree/1)
 ### Prérequis
 
   - Node 12.16
-  - PostgreSQL 9.6
-  - Linux ou OSX (actuellement non testé sur OSX)
+  - PostgreSQL 9.6 ( D'autres versions peuvent fonctionner, non testées )
+  - Linux ou OSX  (Actuellement, les tests OSX étaient exécutés avec Travis uniquement)
   
 ### Configurer la base de données
 
