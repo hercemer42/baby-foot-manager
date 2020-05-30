@@ -1,6 +1,5 @@
 body {
-  margin-left: 30px;
-  margin-right: 30px;
+  margin: 0px 30px 30px;
   font-family: sans-serif;
 }
 
@@ -46,6 +45,10 @@ input {
   box-sizing: border-box;
 }
 
+textarea {
+  padding: 3px 5px;
+}
+
 #flexContainer {
   display: flex;
   height: 600px;
@@ -54,6 +57,18 @@ input {
 #gameBoard {
   max-width: 600px;
   width: 100%;
+  display: flex;
+  flex-flow: column;
+}
+
+#chat {
+  margin-left: 30px;
+  width: 350px; 
+  min-width: 300px; 
+  max-height: 100%;
+  border: thin green solid;
+  border-radius: 5px;
+  flex: auto;
   display: flex;
   flex-flow: column;
 }
@@ -72,4 +87,8 @@ input {
 
 button {
   cursor: pointer
+}
+
+#header {
+  position: relative;
 }

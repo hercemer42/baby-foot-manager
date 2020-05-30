@@ -12,13 +12,39 @@ describe('The Home Page', () => {
     cy.get('#gameBoard input').last().type('CypressPlayer2')
     cy.get('button').click()
     cy.wait(100)
-    cy.get('#gameList').get('li').first().contains('CypressPlayer1 vs CypressPlayer2')
+    cy.get('#gameList').get('li').first().get('span').contains('CypressPlayer1 vs CypressPlayer2')
   })
 
   it ('Sends a message', () => {
     cy.get('#chat .playerSearch input').first().type('CypressMessager{enter}')
     cy.wait(100)
     cy.get('#messageBox').type('Cypress test message{enter}')
-    cy.get('#chat > ul').get('li').last().contains(' : Cypress test message')
+    cy.get('#chat > ul li').last().contains(' : Cypress test message')
+  })
+
+  it ('Opens and closes the menu', () => {
+    cy.viewport(500, 600)
+    cy.get('#menu').click()
+    cy.get('#menu ul').should('be.visible')
+    cy.get('#menu').click()
+    cy.get('#menu ul').should('not.be.visible')
+  })
+
+  it ('Displays the chat', () => {
+    cy.viewport(500, 600)
+    cy.get('#menu').click()
+    cy.get('#menu ul li').last().click()
+    cy.get('#chat').should('be.visible')
+    cy.get('#gameBoard').should('not.be.visible')
+    cy.get('#menu ul').should('not.be.visible')
+  })
+
+  it ('Displays the games', () => {
+    cy.viewport(500, 600)
+    cy.get('#menu').click()
+    cy.get('#menu ul li').first().click()
+    cy.get('#chat').should('not.be.visible')
+    cy.get('#gameBoard').should('be.visible')
+    cy.get('#menu ul').should('not.be.visible')
   })
 })

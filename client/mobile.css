@@ -1,3 +1,57 @@
+@media screen and (max-width: 805px) {
+  #newGame button {
+    width: 105px;
+    margin-left: 5px;
+  }
+
+  #newGame div {
+    width: calc(50% - 90px)
+  }
+}
+
+@media screen and (max-width: 740px) {
+  #flexContainer {
+    height: auto;
+  }
+
+  #chat {
+    display: none;
+    margin-top: 10px;
+  }
+
+  #gameBoard {
+    max-width: 100%;
+    height: auto;
+  }
+
+  #gameList {
+    max-width: 100%;
+    height: auto;
+    flex: unset;
+  }
+
+  #menu {
+    display: block;
+  }
+
+  #chat {
+    margin-left: 0px;
+    max-width: 100%;
+    min-width: 100%;
+    height: auto;
+    flex: unset;
+  }
+
+  #chat > ul {
+    height: auto;
+    flex: unset;
+  }
+
+  #messageBox {
+    font-size: 16px;
+  }
+}
+
 @media screen and (max-width: 540px) {
   body {
     margin-left: 10px;
@@ -9,7 +63,7 @@
   }
 }
 
-@media screen and (max-width: 440px) {
+@media screen and (max-width: 450px) {
   h1 {
     width: 150px;
   }
@@ -19,13 +73,19 @@
     top: -4px;
   }
 
-  button {
+  #newGame button {
     display: block;
     margin-top: 20px;
+    margin-left: 5px;
+    width: 120px;
   }
 
-  #newGame input {
-    width: calc(50% - 44px);
+  #newGame .playerSearch {
+    width: calc(50% - 25px);
+  }
+
+  #newGame div:first-of-type {
+    margin-left: 5px;
   }
 }
 

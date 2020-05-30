@@ -1,0 +1,59 @@
+#menu {
+  display: none;
+  position: absolute;
+  right: -2px;
+  top: 14px;
+  border-radius: 5px;
+  background: white;
+  z-index: 1;
+  overflow: hidden;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  outline: none;
+}
+
+#menu.menuOn {
+  border: thin green solid;
+  -webkit-box-shadow: -7px 7px 4px -4px rgba(0,0,0,0.45);
+  -moz-box-shadow: -7px 7px 4px -4px rgba(0,0,0,0.45);
+  box-shadow: -7px 7px 4px -4px rgba(0,0,0,0.45);
+}
+
+#menu > a {
+  font-size: 50px;
+  color: indigo;
+  height: 40px;
+  text-align: right;
+  display: block;
+  position: relative;
+  top: -11px;
+}
+
+#menu ul {
+  width: 150px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-size: 20px;
+  text-align: left;
+  border-radius: 5px;
+  display: none;
+}
+
+#menu li {
+  border-top: thin rgb(133, 170, 133) solid;
+  background: rgb(250, 255, 250);
+  box-sizing: border-box;
+}
+
+#menu li a {
+  padding: 3px 10px;
+  color: rgb(0, 0, 141);
+  display: block;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
