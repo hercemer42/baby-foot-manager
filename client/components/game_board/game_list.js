@@ -5,7 +5,7 @@
 
   // get the list of game elements
   const gameListContainer = document.getElementById('gameList')
-  const gameList = gameListContainer.getElementsByTagName('ul')[0]
+  const gameList = gameListContainer.querySelector('ul')
 
   // get the list of historical games
   bfHttpService.get('games').then(function(gamesData){
@@ -84,9 +84,8 @@
    * @param { object } gameData 
    */
   function finishGame(gameData) {
-    const gameElementToDelete = gameList.querySelectorAll("[data-id='" + gameData.id + "']")[0]
-    console.log('game', gameList, gameData.id)
-    const textElement = gameElementToDelete.getElementsByTagName('span')[0]
+    const gameElementToDelete = gameList.querySelector("[data-id='" + gameData.id + "']")
+    const textElement = gameElementToDelete.querySelector('span')
     const finishCheckBox = gameElementToDelete.getElementsByClassName('finishCheckBox')[0]
     gameElementToDelete.classList.add('finishedGame')
     finishCheckBox.checked = true
@@ -109,7 +108,7 @@
    * @param { number } id 
    */
   function deleteGameWithVisualEffect(id) {
-    const gameElementToDelete = gameList.querySelectorAll("[data-id='" + id + "']")[0]
+    const gameElementToDelete = gameList.querySelector("[data-id='" + id + "']")
     gameElementToDelete.classList.add('deletedGame')
 
     setTimeout(() => {
@@ -122,7 +121,7 @@
    * @param { number } id 
    */
   function deleteGame(id) {
-    const gameElementToDelete = gameList.querySelectorAll("[data-id='" + id + "']")[0]
+    const gameElementToDelete = gameList.querySelector("[data-id='" + id + "']")
 
     if (!gameElementToDelete) {
       return
@@ -139,8 +138,8 @@
   }
 
   function updateGameCounter() {
-    const gameListHeading = gameListContainer.getElementsByTagName('h2')[0]
-    gameListHeading.getElementsByTagName('span')[0].innerHTML = lastActiveGameIndex + 1
+    const gameListHeading = gameListContainer.querySelector('h2')
+    gameListHeading.querySelector('span').innerHTML = lastActiveGameIndex + 1
   }
 
   /**

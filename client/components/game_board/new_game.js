@@ -6,7 +6,7 @@
   const playerInputs = newGame.getElementsByTagName('input')
   const player1Input  = playerInputs[0]
   const player2Input  = playerInputs[1]
-  const addGameButton  = newGame.getElementsByTagName('button')[0]
+  const addGameButton  = newGame.querySelector('button')
 
   createPlayerSearch(player1Input, { no_search_icon: true })
   createPlayerSearch(player2Input, { no_search_icon: true })

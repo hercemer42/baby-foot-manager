@@ -1,9 +1,9 @@
 (function() {
   'use strict'
   const chat = document.getElementById('chat')
-  const messageList = chat.getElementsByTagName('ul')[0]
-  const playerNameInput = chat.getElementsByTagName('input')[0]
-  const textArea = chat.getElementsByTagName('textarea')[0]
+  const messageList = chat.querySelector('ul')
+  const playerNameInput = chat.querySelector('input')
+  const textArea = chat.querySelector('textarea')
   const localStorage = window.localStorage
   // the number of the icon for the currently selected player
   var playerIconNumber
