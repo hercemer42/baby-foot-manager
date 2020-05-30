@@ -15,8 +15,11 @@
 }
 
 .playerSearch:after {
-  content: '\1F50D';
+  content: '';
+  background-image: url('../../assets/search.png');
   position: absolute;
+  width: 18px;
+  height: 18px;
   right: 16px;
   top: 5px;
 }
