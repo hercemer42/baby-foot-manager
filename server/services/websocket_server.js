@@ -12,6 +12,7 @@ async function messageRouter(message, db, server, client) {
   let result = await runQuery(message, db, message.type)
 
   if (result.error) {
+    console.error('error', result.error)
     client.send(JSON.stringify({ type: 'error', body: result.error }))
     return
   }

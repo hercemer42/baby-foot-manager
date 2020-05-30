@@ -3,7 +3,9 @@
 const BfErrorService = function() {
   this.errorElement = document.getElementById('error')
 
-  this.displayErrorMessage = function() {
+  this.displayErrorMessage = function(error) {
+    console.error('The server has sent the following error: ', error)
+
     this.errorElement.style.display = 'block'
 
     setTimeout(() => {

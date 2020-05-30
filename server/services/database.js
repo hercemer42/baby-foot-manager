@@ -82,8 +82,7 @@ async function getGames() {
 
     return { result: activeGames.rows.concat(finishedGames.rows) }
   } catch (error) {
-    console.error('error', error)
-    return { result: null, error: true}
+    return { result: null, error: error.stack }
   } finally {
     await client.release()
   }

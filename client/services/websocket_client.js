@@ -15,7 +15,7 @@ const BfWebSocketService = function() {
 
   this.socket.onerror = function(event) {
     console.error('The following error occured:  ' + event);
-    bfErrorService.displayErrorMessage()
+    bfErrorService.displayErrorMessage(event)
   }
 
   this.sendMessage = function(type, body) {
