@@ -26,11 +26,8 @@ function createPlayerSearch(input, options = {}){
     }
 
     // optional callback on enter
-    if (event.keyCode == 13) {
-
-      if (options.on_enter) {
-        options.on_enter()
-      }
+    if (event.keyCode == 13 && options.on_enter) {
+      options.on_enter()
     }
 
     // don't show the dropdown on enter or tab
@@ -106,15 +103,28 @@ function createPlayerSearch(input, options = {}){
 
     // enter or space event
     if (event.keyCode == 30 || event.keyCode == 13) {
-      input.value = activeElement.innerHTML
-      input.focus()
-      dropDownElement.style.display = 'none'
-
-      if (options.on_select) {
-        options.on_select(activeElement.icon)
-      }
+      selectPlayer(activeElement)
     }
   })
+
+  dropDownElement.addEventListener('click', function() {
+    selectPlayer()
+  })
+
+  function selectPlayer(activeElement = null) {
+    if (!activeElement) {
+      activeElement = document.activeElement
+    }
+
+    var playerName = activeElement.innerHTML
+    input.value = playerName
+    input.focus()
+    dropDownElement.style.display = 'none'
+
+    if (options.on_select) {
+      options.on_select(activeElement.icon, playerName)
+    }
+  }
 
   /**
    * Creates a dropDown list container and adds it to the input

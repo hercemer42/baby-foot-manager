@@ -4,8 +4,9 @@
   const messageList = chat.getElementsByTagName('ul')[0]
   const playerNameInput = chat.getElementsByTagName('input')[0]
   const textArea = chat.getElementsByTagName('textarea')[0]
+  const localStorage = window.localStorage
   // the number of the icon for the currently selected player
-  var playerIcon
+  var playerIconNumber
   // track if the user name has changed since the last message was sent
   var nameUsedForLastMessage = playerNameInput.value
 
@@ -17,32 +18,67 @@
     writeMessagesToDom(messages) 
   })
 
+  // callback for player search on-enter to focus the message box
   function focusMessageBox() {
     textArea.focus()
   }
 
-  function getPlayerIcon(results) {
-    var icon
+  var initialInput = playerNameInput.value
 
-    results.forEach(function(result) {
-      if (result.name == playerNameInput.value) {
-        icon = result.icon
-      }
-    })
-
-    setPlayerIcon(icon)
+  // get player icon on first run
+  if (initialInput) {
+    setPlayerIcon(localStorage.getItem('playerIcon'), initialInput)
   }
 
   /**
-   * Sets the player icon number
-   * @param { number } icon
+   * callback for player search on_search to get the icon number for the current player from the search results
+   * @param { object } players the players
    */
-  function setPlayerIcon(icon) {
+  function getPlayerIcon(players) {
+    var iconNumber
+    var foundPlayer
+    
+    players.forEach(function(player) {
+      if (player.name == playerNameInput.value) {
+        iconNumber = player.icon
+        foundPlayer = player.name
+      }
+    })
+
+    setPlayerIcon(iconNumber, foundPlayer)
+  }
+
+  /**
+   * Sets the current player icon in the Dom
+   * @param { number } iconNumber
+   * @param { string } player the player to set the icon for
+   */
+  function setPlayerIcon(iconNumber, player) {
     const iconImage = chat.firstElementChild.lastElementChild
-    const xPosition = icon % 14
-    const yPosition = Math.ceil(icon / 14)
-    iconImage.style['background-position'] = `${xPosition * 30}px ${yPosition * 30}px`
-    playerIcon = icon
+
+    if (!player) {
+      localStorage.setItem('playerIcon', '')
+      iconImage.style.display = 'none'
+      playerIconNumber = null
+      return
+    }
+    
+    localStorage.setItem('playerIcon', iconNumber)
+    iconImage.style.display = 'inline-block'
+    var iconPosition = calculateIconPosition(iconNumber)
+    iconImage.style['background-position'] = `${iconPosition.x * 30}px ${iconPosition.y * 30}px`
+    playerIconNumber = iconNumber
+  }
+
+  /**
+   * Calculates the position of the icon in the icon map (used with css background-position property)
+   * @param { number } iconNumber 
+   */
+  function calculateIconPosition(iconNumber) {
+    return {
+      x: iconNumber % 14,
+      y: Math.ceil(iconNumber / 14)
+    }
   }
 
   textArea.addEventListener('keydown', function(event) {
@@ -81,8 +117,8 @@
     }
 
     // set the player icon if it has not already been done
-    if (data.body.player == playerName && !playerIcon) {
-      setPlayerIcon(data.body.player_icon)
+    if (data.body.player == playerName && !playerIconNumber) {
+      setPlayerIcon(data.body.player_icon, playerName)
     }
 
     // keep the bottom of the message box in view when it overflows, but only if the player is the one who sent the message
@@ -115,7 +151,7 @@
    */
   function buildNewMessageElement(messageData) {
     var newMessageElement = document.createElement('li')
-    addPlayerIcon(messageData.player_icon, newMessageElement)
+    addPlayerIcon(messageData, newMessageElement)
     addMessageText(messageData.player, messageData.message, newMessageElement)
 
     if (!messageData.player) {
@@ -125,16 +161,15 @@
     return newMessageElement
   }
 
-  /**
-   * Adds the player icon
-   * @param { number } icon 
-   */
-  function addPlayerIcon(icon, newMessageElement) {
+  function addPlayerIcon(messageData, newMessageElement) {
     var playerIcon = document.createElement('span')
-    playerIcon.style['background-image'] = 'url("../../assets/identicons.jpg")'
-    const xPosition = icon % 14
-    const yPosition = Math.ceil(icon / 14)
-    playerIcon.style['background-position'] = `${xPosition * 15}px ${yPosition * 15}px`
+
+    if (messageData.player) {
+      playerIcon.style['background-image'] = 'url("../../assets/identicons.jpg")'
+      var iconPosition = calculateIconPosition(messageData.player_icon)
+      playerIcon.style['background-position'] = `${iconPosition.x * 15}px ${iconPosition.y * 15}px`
+    }
+
     newMessageElement.appendChild(playerIcon)
   }
 

@@ -54,7 +54,7 @@
   margin-right: 8px;
 }
 
-#chat li span:nth-of-type(1) {
+#chat li span:nth-of-type(2) {
   color: green
 }
 
@@ -64,7 +64,8 @@
 
 #chat > ul li {
   margin-left: 10px;
-  margin-top: 7px;
+  margin-top: 3px;
+  margin-bottom: 4px;
 }
 
 #chat li.unknownPlayer span {
@@ -72,7 +73,8 @@
 }
 
 #chatHeader {
-  width: 100%
+  width: 100%;
+  position: relative;
 }
 
 #chatHeader span {
@@ -80,9 +82,10 @@
   width: 30px;
   height: 30px;
   float: right;
-  position: relative;
-  bottom: 16px;
-  right: 8px;
+  position: absolute;
+  display: none;
+  top: -16px;
+  right: 10px;
   border: thin gray solid;
 }
 
