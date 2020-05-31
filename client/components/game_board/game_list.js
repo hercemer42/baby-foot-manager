@@ -8,9 +8,13 @@
   const gameList = gameListContainer.querySelector('ul')
 
   // get the list of historical games
-  bfHttpService.get('games').then(function(gamesData){
-    writeGamesToDom(gamesData) 
-  })
+  function getGames() {
+    bfHttpService.get('games').then(function(gamesData){
+      writeGamesToDom(gamesData) 
+    })
+  }
+  
+  bfWebSocketService.addEventListener('open', getGames)
 
   /**
    * Add a listener to the game list.
@@ -26,7 +30,7 @@
     switch(elementClass) {
       // request to finish a game
       case 'finishCheckBox' :
-        const messageSent = bfWebSocketService.sendMessage('finishGame', { id: gameId, active: !event.target.checked }, event)
+        var messageSent = bfWebSocketService.sendMessage('finishGame', { id: gameId, active: !event.target.checked }, event)
 
         if (!messageSent) {
           return
@@ -43,7 +47,7 @@
   })
 
   // create an incoming event router by subscibing to webSocket events
-  bfWebSocketService.socket.addEventListener('message', function(event){
+  bfWebSocketService.addEventListener('message', function(event){
     const data = JSON.parse(event.data)
     switch(data.type) {
       case 'addGame' :
@@ -148,6 +152,8 @@
    * @param { object } gamesData 
    */
   function writeGamesToDom(gamesData) {
+    gameList.innerHTML = ''
+
     gamesData.forEach(function(gameData, index) {
       if (gameData.active) {
         lastActiveGameIndex = index

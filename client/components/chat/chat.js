@@ -14,9 +14,13 @@
   createPlayerSearch(playerNameInput, { on_enter: focusMessageBox, on_search: getPlayerIcon, on_select: setPlayerIcon })
 
   // get last 10 messages
-  bfHttpService.get('messages').then(function(messages){
-    writeMessagesToDom(messages) 
-  })
+  function getMessages() {
+    bfHttpService.get('messages').then(function(messages){
+      writeMessagesToDom(messages) 
+    })
+  }
+
+  bfWebSocketService.addEventListener('open', getMessages)
 
   // callback for player search on-enter to focus the message box
   function focusMessageBox() {
@@ -99,13 +103,15 @@
    * @param { object } messages 
    */
   function writeMessagesToDom(messagesData) {
+    messageList.innerHTML = ''
+
     messagesData.forEach(function(messageData) {
       messageList.appendChild(buildNewMessageElement(messageData))
     })
   }
 
   // subscribe to the webSockets message event to get new chats
-  bfWebSocketService.socket.addEventListener('message', function(event){
+  bfWebSocketService.addEventListener('message', function(event){
     // check if the element is currently scrolled down (the +2 is to accomodate for borders)
     const scrolledDown = messageList.scrollTop === messageList.scrollHeight - messageList.offsetHeight +2 
     const data = JSON.parse(event.data)
