@@ -9,7 +9,6 @@
   var selected = 'games'
 
   menu.addEventListener('click', function(event) {
-    console.log('here', event.target)
     switch(event.target.innerHTML) {
       case 'Parties':
         toggleElements(true, false)
@@ -21,7 +20,6 @@
     }
 
     if (menuOpen) {
-      console.log('what?')
       closeMenu()
       return
     }
