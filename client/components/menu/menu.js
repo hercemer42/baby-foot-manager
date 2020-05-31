@@ -1,4 +1,4 @@
-(function () {
+function bfMenu() {
   'use strict'
 
   const menu = document.getElementById('menu')
@@ -62,4 +62,4 @@
     menuList.style.display = 'block'
     menuOpen = true
   }
-})()
+}

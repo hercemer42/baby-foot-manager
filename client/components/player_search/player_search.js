@@ -5,10 +5,10 @@
  * Note: The input must be the only element inside its parent.
  * 
  * @param { object } input the input element on which to attach the search service
- * @param { object } options { no_search_icon: true, on_enter: callback, on_search: callback, on_select: callback }
+ * @param { object } options { search_icon: false, on_enter: callback, on_search: callback, on_select: callback }
  */
 function createPlayerSearch(input, options = {}){
-  var dropDownElement = createDropDownElement(input, options.no_search_icon)
+  var dropDownElement = createDropDownElement(input, options.search_icon)
   // record the last keyCode to be registered
   var lastKeyCode
 
@@ -130,13 +130,13 @@ function createPlayerSearch(input, options = {}){
    * Creates a dropDown list container and adds it to the input
    * @param { object } input the input element
    */
-  function createDropDownElement(input, no_search_icon) {
+  function createDropDownElement(input, search_icon) {
     const dropDownElement = document.createElement('ul')
     const parentElement = input.parentElement
     parentElement.appendChild(dropDownElement)
 
-    if (no_search_icon) {
-      parentElement.classList.add('no_search_icon')
+    if (search_icon) {
+      parentElement.classList.add('search_icon')
     }
 
     return dropDownElement

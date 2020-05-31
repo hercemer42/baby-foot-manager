@@ -2,62 +2,64 @@
 
 const BfWebSocketService = function() {
   var socket = null
-  const self = this
   var eventListenerCallbacks = []
   var reconnectTimeout = 1
   var connectionStatus = 'closed'
 
-  function connect() {
-    socket = new WebSocket('ws://' + BF_CLIENT_CONFIG.SERVER_IP + ':' + BF_CLIENT_CONFIG.WEBSOCKET_PORT)
+  this.connect = function(){
+    return new Promise(function(resolve, reject) {
+      socket = new WebSocket('ws://' + BF_CLIENT_CONFIG.SERVER_IP + ':' + BF_CLIENT_CONFIG.WEBSOCKET_PORT)
 
-    socket.onopen = function(event) {
-      connectionStatus = 'open'
-      bfErrorService.logToConsole('log', 'A WebSocket connection has been opened.')
+      socket.onopen = function(event) {
+        connectionStatus = 'open'
+        bfErrorService.logToConsole('log', 'A WebSocket connection has been opened.')
 
-      eventListenerCallbacks.forEach(e => {
-        if (e.type == 'open') {
-          e.callback()
-          return
-        }
+        eventListenerCallbacks.forEach(e => {
+          if (e.type == 'open') {
+            e.callback()
+            return
+          }
 
-        socket.addEventListener(e.type, e.callback)
-      })
-    }
+          socket.addEventListener(e.type, e.callback)
+        })
 
-    socket.onmessage = function(event) {
-      const data = JSON.parse(event.data)
-
-      if (data.type === 'error') {
-        bfErrorService.displayErrorMessage('The server has sent the following error: ', event)
-      }
-    }
-
-    socket.onerror = function(event) {
-      if (connectionStatus == 'open') {
-        bfErrorService.displayErrorMessage('A WebSocket error has occured, closing connection.', event)
+        resolve()
       }
 
-      connectionStatus = 'closed'
-      socket.close()
-    }
+      socket.onmessage = function(event) {
+        const data = JSON.parse(event.data)
 
-    socket.onclose = function(event) {
-      bfErrorService.logToConsole('warning', 'Socket is closed. Reconnect will be attempted in ' + reconnectTimeout + ' second.');
+        if (data.type === 'error') {
+          bfErrorService.displayErrorMessage('The server has sent the following error: ', event)
+        }
+      }
 
-      setTimeout(function() {
-        /**
-         * The reset timer gradually climbs from 1 second to 5 minutes
-         */
-        if (reconnectTimeout < 300) {
-          reconnectTimeout++
+      socket.onerror = function(event) {
+        if (connectionStatus == 'open') {
+          bfErrorService.displayErrorMessage('A WebSocket error has occured, closing connection.', event)
         }
 
-        connect();
-      }, reconnectTimeout * 1000);
-    }
+        connectionStatus = 'closed'
+        socket.close()
+      }
+
+      socket.onclose = function(event) {
+        bfErrorService.logToConsole('warning', 'Socket is closed. Reconnect will be attempted in ' + reconnectTimeout + ' second.');
+
+        setTimeout(function() {
+          /**
+           * The reset timer gradually climbs from 1 second to 5 minutes
+           */
+          if (reconnectTimeout < 300) {
+            reconnectTimeout++
+          }
+
+          this.connect();
+        }, reconnectTimeout * 1000);
+      }
+    })
   }
 
-  connect()
 
   /**
    * Adds an event listener on socket message, stores the callback so it can be recreated on reconnection

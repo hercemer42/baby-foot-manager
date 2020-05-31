@@ -1,4 +1,4 @@
-(function () {
+function bfNewGame() {
   'use strict'
 
   // get the elements
@@ -8,8 +8,8 @@
   const player2Input  = playerInputs[1]
   const addGameButton  = newGame.querySelector('button')
 
-  createPlayerSearch(player1Input, { no_search_icon: true })
-  createPlayerSearch(player2Input, { no_search_icon: true })
+  createPlayerSearch(player1Input)
+  createPlayerSearch(player2Input)
 
   // add the game on form submit
   addGameButton.addEventListener('click', function(event) {
@@ -19,4 +19,4 @@
 
     bfWebSocketService.sendMessage('addGame', { player1: player1Input.value, player2: player2Input.value }, event)
   })
-})()
+}

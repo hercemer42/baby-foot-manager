@@ -1,4 +1,4 @@
-(function () {
+function bfGameList() {
   'use strict'
   // keep a marker of the last active game position in the list as a reference for when adding new elements
   var lastActiveGameIndex = -1
@@ -13,7 +13,9 @@
       writeGamesToDom(gamesData) 
     })
   }
-  
+
+  // execute once on first load and then every time a connection is restablished
+  getGames()
   bfWebSocketService.addEventListener('open', getGames)
 
   /**
@@ -221,4 +223,4 @@
     finishCheckBox.setAttribute('title', 'Terminez le jeu')
     return finishCheckBox
   }
-})()
+}

@@ -14,7 +14,7 @@
   position: relative;
 }
 
-.playerSearch:after {
+.playerSearch.search_icon:after {
   content: '';
   background-image: url('../../assets/search.png');
   position: absolute;
@@ -22,10 +22,6 @@
   height: 18px;
   right: 16px;
   top: 5px;
-}
-
-.playerSearch.no_search_icon:after {
-  content: none;
 }
 
 #chat {

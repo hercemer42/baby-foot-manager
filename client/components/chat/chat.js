@@ -1,4 +1,4 @@
-(function() {
+function bfChat() {
   'use strict'
   const chat = document.getElementById('chat')
   const messageList = chat.querySelector('ul')
@@ -11,7 +11,7 @@
   var nameUsedForLastMessage = playerNameInput.value
 
   // turn the input into a player search
-  createPlayerSearch(playerNameInput, { on_enter: focusMessageBox, on_search: getPlayerIcon, on_select: setPlayerIcon })
+  createPlayerSearch(playerNameInput, { search_icon: true, on_enter: focusMessageBox, on_search: getPlayerIcon, on_select: setPlayerIcon })
 
   // get last 10 messages
   function getMessages() {
@@ -20,6 +20,8 @@
     })
   }
 
+  // execute once on first load and then every time a connection is restablished
+  getMessages()
   bfWebSocketService.addEventListener('open', getMessages)
 
   // callback for player search on-enter to focus the message box
@@ -211,4 +213,4 @@
     newMessageElement.appendChild(playerNameSpan)
     newMessageElement.innerHTML = newMessageElement.innerHTML + ' : ' + message
   }
-})()
+}
