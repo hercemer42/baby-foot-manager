@@ -90,8 +90,8 @@ function bfChat() {
   textArea.addEventListener('keydown', function(event) {
     // submit the message on enter, create new line on enter + shift
     if (event.keyCode == 13 && !event.shiftKey) {
-      event.target.value = null
       const messageSent = bfWebSocketService.sendMessage('newMessage', { player: playerNameInput.value , message: textArea.value.trim() }, event)
+      event.target.value = null
 
       if (!messageSent) {
         return
