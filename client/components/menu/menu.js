@@ -32,7 +32,7 @@ function bfMenu() {
   })
 
   window.onresize = function(event) {
-    if (window.innerWidth > 740) {
+    if (window.innerWidth > 810) {
       toggleElements(true, true)
       return
     }

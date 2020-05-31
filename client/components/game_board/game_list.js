@@ -83,7 +83,6 @@ function bfGameList() {
 
     // add one on up or plus key
     if (event.keyCode == 38 || event.keyCode == 107) {
-      console.log('here?')
       const newValue = +event.target.value + 1
 
       if (newValue != null && !isNaN(newValue) && newValue <= 10) {
@@ -102,7 +101,7 @@ function bfGameList() {
       }
     }
 
-    event.target.scrollLeft = event.target.scrollWidth
+    alignToRight(event.target)
   })
 
   // insure the score aligns to the right
@@ -111,8 +110,16 @@ function bfGameList() {
       return
     }
 
-    event.target.scrollLeft = event.target.scrollWidth
+    alignToRight(event.target)
   })
+
+  /**
+   * aligns an input to the right, used to make sure the scores are always right aligned 
+   * @param { object } element 
+   */
+  function alignToRight(element) {
+    element.scrollLeft = element.scrollWidth
+  }
 
   // create an incoming event router by subscibing to webSocket events
   bfWebSocketService.addEventListener('message', function(event){
@@ -141,6 +148,11 @@ function bfGameList() {
     const insertIndex = lastActiveGameIndex + (gameData.active ? 1 : 0)
 
     gameList.insertBefore(newGameElement, gameList.children[insertIndex])
+
+    for (var scoreElement of newGameElement.getElementsByClassName('score')) {
+      alignToRight(scoreElement.querySelector('input'))
+    }
+
     // briefly color newly arrived games so that the user can distinguish them
     setTimeout(function() {
       newGameElement.classList.remove(tempClass)
@@ -158,12 +170,17 @@ function bfGameList() {
    */
   function finishGame(gameData) {
     const gameElementToDelete = gameList.querySelector("[data-id='" + gameData.id + "']")
-    const textElement = gameElementToDelete.querySelector('span')
+    const spanElements = gameElementToDelete.getElementsByTagName('span')
+    const textElement = spanElements[0]
+    const score1Element = spanElements[1]
+    const score2Element = spanElements[2]
     const finishCheckBox = gameElementToDelete.getElementsByClassName('finishCheckBox')[0]
     gameElementToDelete.classList.add('finishedGame')
     finishCheckBox.checked = true
     finishCheckBox.disabled = true
-    textElement.classList.add('finished')
+    score1Element.disabled = true
+    score2Element.disabled = true
+    textElement.parentElement.classList.add('finished')
     /**
      * Create a visual pause between the user finishing a game and it moving down the list
      * so that they have time to realize their action took effect
@@ -233,7 +250,12 @@ function bfGameList() {
       }
 
       // write to dom
-      gameList.appendChild(buildNewGameElement(gameData))
+      const gameElement = buildNewGameElement(gameData)
+      gameList.appendChild(gameElement)
+
+      for (var scoreElement of gameElement.getElementsByClassName('score')) {
+        alignToRight(scoreElement.querySelector('input'))
+      }
     })
 
     updateGameCounter()
@@ -259,7 +281,7 @@ function bfGameList() {
     newGameElement.appendChild(buildDeleteCheckBox())
 
     if (finishCheckBox.checked) {
-      newGameText.classList.add('finished')
+      newGameElement.classList.add('finished')
     }
 
     return newGameElement
@@ -276,6 +298,7 @@ function bfGameList() {
 
     newScoreElement.classList.add('score')
     newScoreInput.value = score ? score : 0
+    newScoreInput.disabled = !gameData.active
 
     newScoreElement.appendChild(newScoreInput)
     return newScoreElement

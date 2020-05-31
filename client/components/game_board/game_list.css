@@ -19,6 +19,7 @@
 }
 
 #gameList li {
+  display: flex;
   margin-bottom: 5px;
 }
 
@@ -42,7 +43,6 @@
   font-family: 'sans-serif';
   border-radius: 0;
   position: relative;
-  top: 2px;
   cursor: pointer;
 }
 
@@ -77,7 +77,7 @@
   border: thin gray solid;
 }
 
-#gameList .finished {
+#gameList .finished span:first-child {
   color: gray;
 }
 
@@ -85,8 +85,12 @@
   display: inline-block;
   width: 280px;
   max-width: 100%;
-  vertical-align: super;
   margin-left: 10px;
+}
+
+#gameList ul span:first-child {
+  position: relative;
+  top: 4px;
 }
 
 #gameList .score {
@@ -100,7 +104,6 @@
   border-right: 2px #e0e0e0 solid;
   border-radius: 3px;
   position: relative;
-  top: 7px;
 }
 
 #gameList span input {
@@ -117,6 +120,10 @@
   outline: none;
 }
 
+#gameList .finished .score {
+  border: 2px transparent solid;
+}
+
 #gameList span:nth-of-type(4) {
   margin-right: 10px;
 }
@@ -127,6 +134,6 @@
   color: red;
   font-family: 'cursedTimer';
   position: relative;
-  right: 7px;
-  top: 1px;
+  left: -6px;
+  top: 6px;
 }

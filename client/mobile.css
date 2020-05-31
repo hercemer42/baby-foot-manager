@@ -1,15 +1,7 @@
 @media screen and (max-width: 805px) {
-  #newGame button {
-    width: 105px;
-    margin-left: 5px;
-  }
-
-  #newGame div {
-    width: calc(50% - 90px)
-  }
 }
 
-@media screen and (max-width: 740px) {
+@media screen and (max-width: 810px) {
   #flexContainer {
     height: auto;
   }
@@ -49,6 +41,15 @@
 
   #messageBox {
     font-size: 16px;
+  }
+
+  #newGame button {
+    width: 105px;
+    margin-left: 5px;
+  }
+
+  #newGame div {
+    width: calc(50% - 90px)
   }
 }
 
@@ -92,5 +93,9 @@
 @media screen and (max-width: 410px) {
   #gameList ul span {
     width: 200px;
+  }
+
+  #gameList ul .score {
+    min-width: 20px;
   }
 }
