@@ -12,11 +12,11 @@
   createPlayerSearch(player2Input, { no_search_icon: true })
 
   // add the game on form submit
-  addGameButton.addEventListener('click', function() {
+  addGameButton.addEventListener('click', function(event) {
     if (!player1Input.value || !player2Input.value) {
       return
     }
 
-    bfWebSocketService.sendMessage('addGame', { player1: player1Input.value, player2: player2Input.value })
+    bfWebSocketService.sendMessage('addGame', { player1: player1Input.value, player2: player2Input.value }, event)
   })
 })()

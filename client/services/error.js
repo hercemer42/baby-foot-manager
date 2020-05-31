@@ -3,8 +3,8 @@
 const BfErrorService = function() {
   this.errorElement = document.getElementById('error')
 
-  this.displayErrorMessage = function(error) {
-    console.error('The server has sent the following error: ', error)
+  this.displayErrorMessage = function(error, stack = null) {
+    console.error(error, stack)
 
     this.errorElement.style.display = 'block'
 

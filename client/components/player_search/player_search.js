@@ -182,7 +182,7 @@ function createPlayerSearch(input, options = {}){
   }
 
   /**
-   * Ask the server to search for players matching the player name
+   * Request a list of players matching the player name input from the server
    * @param { string } playerName 
    */
   function search(playerName) {
@@ -190,6 +190,7 @@ function createPlayerSearch(input, options = {}){
 
     var path = 'playerSearch'
 
+    // if a space is entered in the search bar, get a list of all players
     if (playerName) {
       path = path + '?name=' + playerName
     }

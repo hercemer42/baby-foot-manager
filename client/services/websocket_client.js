@@ -8,23 +8,39 @@ const BfWebSocketService = function() {
     const data = JSON.parse(event.data)
 
     if (data.type === 'error') {
-      console.error('Error: ' + data.body)
-      bfErrorService.displayErrorMessage()
+      bfErrorService.displayErrorMessage('The server has sent the following error: ', event)
     }
   }
 
   this.socket.onerror = function(event) {
-    console.error('The following error occured:  ' + event);
-    bfErrorService.displayErrorMessage(event)
+    bfErrorService.displayErrorMessage('A webSocket error has occured: ', event)
   }
 
-  this.sendMessage = function(type, body) {
+  /**
+   * @param { string } type the message type ( 'addGame', 'deleteGame', 'finishGame', 'newMessage' )
+   * @param { object } type the message body
+   * @param { object } event optional : the DOM event that triggered the message
+   * @return { boolean } returns true if the message has been sent, false if the connection is offline
+   */
+  this.sendMessage = function(type, body, event) {
+    // if the connection is offline, display an error message, prevent the user action, and attempt to re-establish a connection
+    if (this.socket.readyState == 3) {
+      if (event) {
+        event.preventDefault()
+      }
+
+      bfErrorService.displayErrorMessage('Cannot establish contact with webSocket server')
+      return false
+    }
+
     this.socket.send(
       JSON.stringify({
         type: type,
         body: body
       })
     )
+
+    return true
   }
 }
 

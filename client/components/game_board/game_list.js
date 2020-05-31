@@ -26,18 +26,19 @@
     switch(elementClass) {
       // request to finish a game
       case 'finishCheckBox' :
+        const messageSent = bfWebSocketService.sendMessage('finishGame', { id: gameId, active: !event.target.checked }, event)
+
+        if (!messageSent) {
+          return
+        }
+
         event.target.disabled = true
-        bfWebSocketService.sendMessage('finishGame', { id: gameId, active: !event.target.checked })
         break
       
       // request to delete a game
       case 'deleteCheckBox' :
-        bfWebSocketService.sendMessage('deleteGame', { id: gameId })
+        bfWebSocketService.sendMessage('deleteGame', { id: gameId }, event)
         break
-    }
-
-    if (!gameId) {
-      return
     }
   })
 

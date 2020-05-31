@@ -155,7 +155,8 @@ async function newMessage(data) {
   const playerId = await createPlayer(data.player, client)
 
   try {
-    const newMessageID = await client.query(`INSERT INTO chat (
+    const newMessageID = await client.query(`
+    INSERT INTO chat (
       id, message, player, created_at
     ) VALUES (
       nextval('chat_id_seq'), $1, $2, current_timestamp
