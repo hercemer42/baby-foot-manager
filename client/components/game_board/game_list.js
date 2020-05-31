@@ -116,6 +116,11 @@ function bfGameList() {
    */
   function deleteGameWithVisualEffect(id) {
     const gameElementToDelete = gameList.querySelector("[data-id='" + id + "']")
+
+    if (!gameElementToDelete) {
+      return
+    }
+
     gameElementToDelete.classList.add('deletedGame')
 
     setTimeout(function() {
