@@ -5,7 +5,11 @@ module.exports = {
     "bfErrorService": "readonly",
     "BF_CLIENT_CONFIG": "readonly",
     "Promise": "readonly",
-    "createPlayerSearch": "readonly"
+    "createPlayerSearch": "readonly",
+    "bfNewGame": "readonly",
+    "bfGameList": "readonly",
+    "bfChat": "readonly",
+    "bfMenu": "readonly"
   },
   "rules": {
       "no-unused-vars": [1]
