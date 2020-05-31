@@ -100,26 +100,7 @@ function bfGameList() {
         event.preventDefault()
       }
     }
-
-    alignToRight(event.target)
   })
-
-  // insure the score aligns to the right
-  gameList.addEventListener('focusout', function() {
-    if (event.target.parentElement.classList[0] != 'score' || event.target.value != 10) {
-      return
-    }
-
-    alignToRight(event.target)
-  })
-
-  /**
-   * aligns an input to the right, used to make sure the scores are always right aligned 
-   * @param { object } element 
-   */
-  function alignToRight(element) {
-    element.scrollLeft = element.scrollWidth
-  }
 
   // create an incoming event router by subscibing to webSocket events
   bfWebSocketService.addEventListener('message', function(event){
@@ -148,10 +129,6 @@ function bfGameList() {
     const insertIndex = lastActiveGameIndex + (gameData.active ? 1 : 0)
 
     gameList.insertBefore(newGameElement, gameList.children[insertIndex])
-
-    for (var scoreElement of newGameElement.getElementsByClassName('score')) {
-      alignToRight(scoreElement.querySelector('input'))
-    }
 
     // briefly color newly arrived games so that the user can distinguish them
     setTimeout(function() {
@@ -252,10 +229,6 @@ function bfGameList() {
       // write to dom
       const gameElement = buildNewGameElement(gameData)
       gameList.appendChild(gameElement)
-
-      for (var scoreElement of gameElement.getElementsByClassName('score')) {
-        alignToRight(scoreElement.querySelector('input'))
-      }
     })
 
     updateGameCounter()

@@ -1,0 +1,9 @@
+/* Safari specific styles */
+@media not all and (min-resolution:.001dpcm) {
+  @supports (-webkit-appearance:none) {
+    #gameList span input {
+      -webkit-overflow-scrolling: auto;
+      top: -4px;
+    }
+  }
+}

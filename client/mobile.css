@@ -2,41 +2,20 @@
 }
 
 @media screen and (max-width: 810px) {
-  #flexContainer {
-    height: auto;
-  }
-
   #chat {
     display: none;
     margin-top: 10px;
-  }
-
-  #gameBoard {
+    margin-left: 0px;
     max-width: 100%;
-    height: auto;
+    min-width: 100%;
   }
 
   #gameList {
     max-width: 100%;
-    height: auto;
-    flex: unset;
   }
 
   #menu {
     display: block;
-  }
-
-  #chat {
-    margin-left: 0px;
-    max-width: 100%;
-    min-width: 100%;
-    height: auto;
-    flex: unset;
-  }
-
-  #chat > ul {
-    height: auto;
-    flex: unset;
   }
 
   #messageBox {
@@ -96,6 +75,7 @@
   }
 
   #gameList ul .score {
-    min-width: 20px;
+    min-width: 25px;
+    padding-right: 7px;
   }
 }
