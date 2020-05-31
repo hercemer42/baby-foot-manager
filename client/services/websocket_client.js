@@ -7,6 +7,8 @@ const BfWebSocketService = function() {
   var connectionStatus = 'closed'
 
   this.connect = function(){
+    const self = this 
+
     return new Promise(function(resolve, reject) {
       socket = new WebSocket('ws://' + BF_CLIENT_CONFIG.SERVER_IP + ':' + BF_CLIENT_CONFIG.WEBSOCKET_PORT)
 
@@ -54,7 +56,7 @@ const BfWebSocketService = function() {
             reconnectTimeout++
           }
 
-          this.connect();
+          self.connect();
         }, reconnectTimeout * 1000);
       }
     })
