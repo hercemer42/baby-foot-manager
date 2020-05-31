@@ -13,7 +13,16 @@ describe('The Home Page', () => {
     cy.get('#newGame input').last().type('CypressPlayer2')
     cy.get('button').click()
     cy.wait(100)
-    cy.get('#gameList').get('li').first().get('span').contains('CypressPlayer1 vs CypressPlayer2')
+    cy.get('#gameList').get('li').find('span').first().contains('CypressPlayer1 vs CypressPlayer2')
+  })
+
+  it ('Finishes a game and sets a score', () => {
+    cy.get('#gameList').get('li').find('input').eq(0).type(4)
+    cy.get('#gameList').get('li').find('input').eq(1).type(5)
+    cy.get('#gameList').get('li').find('input').eq(2).check()
+    cy.wait(100)
+    cy.get('#gameList').get('li').find('input').eq(0).should('have.value', '4')
+    cy.get('#gameList').get('li').find('input').eq(1).should('have.value', '5')
   })
 
   it ('Sends a message', () => {

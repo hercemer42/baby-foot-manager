@@ -17,10 +17,12 @@ module.exports = [
       "player1 INTEGER REFERENCES players(id) NOT NULL",
       "player2 INTEGER REFERENCES players(id) NOT NULL",
       "created_at TIMESTAMP NOT NULL",
-      "updated_at TIMESTAMP NOT NULL"
+      "updated_at TIMESTAMP NOT NULL",
+      "player1Score INTEGER",
+      "player2Score INTEGER"
     ],
     sequences: [ "games_id_seq" ],
-    indexes: [ "active, created_at" ]
+    indexes: [ "active, updated_at", "active, updated_at, player1Score, player2Score" ]
   },
   {
     table: "chat",

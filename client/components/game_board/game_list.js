@@ -32,7 +32,16 @@ function bfGameList() {
     switch(elementClass) {
       // request to finish a game
       case 'finishCheckBox' :
-        var messageSent = bfWebSocketService.sendMessage('finishGame', { id: gameId, active: !event.target.checked }, event)
+        var scoreElements = parentElement.getElementsByClassName('score')
+        var player1score = scoreElements[0].querySelector('input').value
+        var player2score = scoreElements[1].querySelector('input').value
+
+        var messageSent = bfWebSocketService.sendMessage('finishGame', {
+          id: gameId,
+          active: !event.target.checked,
+          player1score: player1score,
+          player2score: player2score
+        }, event)
 
         if (!messageSent) {
           return
@@ -46,6 +55,63 @@ function bfGameList() {
         bfWebSocketService.sendMessage('deleteGame', { id: gameId }, event)
         break
     }
+  })
+
+  // Make the score input box behave like a number input.  We cannot set the type to number as we don't want the arrows
+  gameList.addEventListener('keydown', function(event) {
+    if (event.target.parentElement.classList[0] != 'score') {
+      return
+    }
+
+    const inputValue = event.target.value
+    const allowedKey = event.key.length > 1
+    const startPos = event.target.selectionStart
+    const endPos = event.target.selectionEnd
+    const proposedValue = inputValue.slice(0, startPos) + event.key + inputValue.slice(endPos, inputValue.length)
+    const outOfRange = !isNaN(proposedValue) && (proposedValue < 0 || proposedValue > 10)
+
+    // only allow numerical or navigation keys and numbers between 1 and 10
+    if( !allowedKey && (outOfRange || isNaN(event.key))) {
+      event.preventDefault()
+    }
+
+    // strip leading zeros (no space to display them)
+    if (!allowedKey && !isNaN(proposedValue) && proposedValue.length == 2 && proposedValue[0] == 0) {
+      event.target.value = proposedValue[1]
+      event.preventDefault()
+    }
+
+    // add one on up or plus key
+    if (event.keyCode == 38 || event.keyCode == 107) {
+      console.log('here?')
+      const newValue = +event.target.value + 1
+
+      if (newValue != null && !isNaN(newValue) && newValue <= 10) {
+        event.target.value = newValue
+        event.preventDefault()
+      }
+    }
+
+    // subtract one on down or minus key
+    if (event.keyCode == 40 || event.keyCode == 109) {
+      const newValue = +event.target.value - 1
+
+      if (newValue != null && !isNaN(newValue) && newValue >= 0) {
+        event.target.value = newValue
+        event.preventDefault()
+      }
+    }
+
+    event.target.scrollLeft = event.target.scrollWidth
+  })
+
+  // insure the score aligns to the right
+  gameList.addEventListener('focusout', function() {
+    if (event.target.parentElement.classList[0] != 'score' || event.target.value != 10) {
+      return
+    }
+
+    event.target.scrollLeft = event.target.scrollWidth
   })
 
   // create an incoming event router by subscibing to webSocket events
@@ -178,11 +244,17 @@ function bfGameList() {
    * @param { object } gameData 
    */
   function buildNewGameElement(gameData) {
-    var newGameElement = document.createElement('li')
-    newGameElement.setAttribute('data-id', gameData.id)
+    const newGameElement = document.createElement('li')
     const newGameText = buildGameText(gameData.player1, gameData.player2)
-    newGameElement.appendChild(newGameText)
     const finishCheckBox = buildFinishCheckBox(gameData.active)
+    const player1score = buildPlayerScore(1, gameData)
+    const player2score = buildPlayerScore(2, gameData)
+
+    newGameElement.setAttribute('data-id', gameData.id)
+    newGameElement.appendChild(newGameText)
+    newGameElement.appendChild(player1score)
+    newGameElement.appendChild(buildScoreDash())
+    newGameElement.appendChild(player2score)
     newGameElement.appendChild(finishCheckBox)
     newGameElement.appendChild(buildDeleteCheckBox())
 
@@ -191,6 +263,28 @@ function bfGameList() {
     }
 
     return newGameElement
+  }
+
+  /**
+   * @param { number } playerNumber 
+   * @param { object } gameData 
+   */
+  function buildPlayerScore(playerNumber, gameData) {
+    const newScoreElement = document.createElement('span')
+    const newScoreInput = document.createElement('input')
+    const score = gameData['player' + playerNumber + 'score']
+
+    newScoreElement.classList.add('score')
+    newScoreInput.value = score ? score : 0
+
+    newScoreElement.appendChild(newScoreInput)
+    return newScoreElement
+  }
+
+  function buildScoreDash() {
+    var dashElement = document.createElement('span')
+    dashElement.innerHTML = ':'
+    return dashElement
   }
 
   /**

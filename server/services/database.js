@@ -47,7 +47,7 @@ async function initDb(config) {
 
 async function _getGame(client, gameId) {
   return await client.query(`
-    SELECT g.id, g.active, p.name as player1, p2.name as player2, g.created_at, g.updated_at
+    SELECT g.id, g.active, p.name as player1, p2.name as player2, g.player1score, g.player2score, g.created_at, g.updated_at
     FROM games g
     INNER JOIN players p ON g.player1 = p.id
     INNER JOIN players p2 ON g.player2 = p2.id
@@ -62,7 +62,7 @@ async function getGames() {
     // @TODO pagination
     // first get the active games in ascending order (oldest first)
     const activeGames = await client.query(`
-      SELECT g.id, g.active, p.name AS player1, p2.name AS player2, g.created_at, g.updated_at
+      SELECT g.id, g.active, p.name AS player1, p2.name AS player2, g.player1score, g.player2score, g.created_at, g.updated_at
       FROM games g
       INNER JOIN players p ON g.player1 = p.id
       INNER JOIN players p2 ON g.player2 = p2.id
@@ -72,7 +72,7 @@ async function getGames() {
 
     // then get the finished games in descending order (most recent first)
     const finishedGames = await client.query(`
-      SELECT g.id, g.active, p.name AS player1, p2.name AS player2, g.created_at, g.updated_at
+      SELECT g.id, g.active, p.name AS player1, p2.name AS player2, g.player1score, g.player2score, g.created_at, g.updated_at
       FROM games g
       INNER JOIN players p ON g.player1 = p.id
       INNER JOIN players p2 ON g.player2 = p2.id
@@ -122,10 +122,10 @@ async function finishGame(data) {
 
   try {
     const updatedGame = await client.query(`
-      UPDATE games SET active = false, updated_at = current_timestamp
-      WHERE games.id = $1
+      UPDATE games SET active = false, updated_at = current_timestamp, player1score = $1, player2score = $2
+      WHERE games.id = $3
       RETURNING id
-    `, [ data.id ])
+    `, [ data.player1score, data.player2score, data.id ])
 
     const result = await _getGame(client, updatedGame.rows[0].id)
 
