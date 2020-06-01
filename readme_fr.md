@@ -3,7 +3,7 @@
 
 Toujours savoir à qui le tour avec BabyFoot Manager!
 
-Version stable [v2](https://github.com/hercemer42/baby-foot-manager/tree/2)
+Version stable [v3](https://github.com/hercemer42/baby-foot-manager/tree/3)
 
 ## Fonctionalités
 

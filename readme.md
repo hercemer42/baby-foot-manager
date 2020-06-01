@@ -3,7 +3,7 @@ EN/[FR](readme_fr.md)
 
 Always know whose turn it is with the BabyFoot (Fussball) Manager!
 
-Stable version [v2](https://github.com/hercemer42/baby-foot-manager/tree/2)
+Stable version [v3](https://github.com/hercemer42/baby-foot-manager/tree/3)
 
 ## Features
 
