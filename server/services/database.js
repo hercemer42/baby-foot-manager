@@ -59,7 +59,6 @@ async function getGames() {
   const client = await _pool.connect() 
 
   try {
-    // @TODO pagination
     // first get the active games in ascending order (oldest first)
     const activeGames = await client.query(`
       SELECT g.id, g.active, p.name AS player1, p2.name AS player2, g.player1score, g.player2score, g.created_at, g.updated_at

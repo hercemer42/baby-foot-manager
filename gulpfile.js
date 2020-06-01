@@ -1,6 +1,6 @@
 'use strict'
 /**
- * @TODO WARNING - when restarting the processes the webproxy client connections can
+ * WARNING - when restarting the processes the webproxy client connections can
  * become duplicated, causing weird behavior in the front end.  This should be fixed at some stage,
  * for the meantime don't use gulp when debugging webproxy functionality.
  */
