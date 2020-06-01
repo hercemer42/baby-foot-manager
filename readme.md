@@ -14,6 +14,40 @@ Stable version [v2](https://github.com/hercemer42/baby-foot-manager/tree/2)
 * Real time chat service
 * Works on mobile or in the browser
 
+## Instructions
+
+### Adding a new game.
+The purpose of the BabyFoot Manager is to track who's turn it is at a communal Fussball table.
+To start, enter the player names who will play the next game, and click on 'New game'.
+The new game will appear in the list.
+The oldest unfinished games will always appear on top of the list, to respect the turn order.
+If one or more players matching the text you are typing already exists, it will appear in the dropdown list below the input box.
+You can select an existing player by using the arrow and enter keys, or by clicking on it.
+You can see a list of all existing players by entering a space.
+
+### Finishing a game.
+When a game has finished, record a score by clicking in each of the score boxes next to the game in turn, and type a score.
+The score box also supports the up and down arrow keys, and plus and minus keys.
+Check the green check box next to the game name to mark it as finished.  You can also finish a game without recording a score.
+The game cannot be edited once finished.
+When a game is finished, it will jump to the lower half of the list after a brief pause.  The finished games are listed by the most recently finished first.
+
+### Deleting a game.
+If you no longer want a game appearing in the history, you can delete it.  Just click on the red cross to the right of the game in the list.
+Once a game has been deleted, it will no longer be taken into account in the leaderboard.
+
+### Chatting.
+To start, type your player name into the nickname box.
+If one or more players matching the text you are typing already exists, it will appear in the dropdown list below the input box.
+You can select an existing player by using the arrow and enter keys, or by clicking on it.
+You can see a list of all existing players by entering a space.
+
+Once you have typed your player name, press enter to jump to the message box where you can message the other players.
+You can also message anonymously.
+
+### Leaderboard.
+The leaderboard shows who is currently at the top of the ranking.  The players are listed by rank, player name, and total amount of games won. The leaderboard will automatically update as you play.  The top three players are marked in Gold, Silver and Bronze, and players can be tied for place.
+
 ## Installation
 
 ### Prerequisites
