@@ -1,0 +1,43 @@
+#leaderboardHeader {
+  width: 100%;
+  position: relative;
+}
+
+#leaderboard h2 {
+  border: thin green solid;
+  color: rgb(27, 27, 194);
+}
+
+#leaderboard ul {
+  margin: 30px 10px 10px 10px;
+  overflow-y: auto;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+#leaderboard li {
+  margin-top: 5px;
+  padding-right: 5px;
+}
+
+#leaderboard li span:first-child {
+  margin-right: 10px;
+  padding: 0px 5px ;
+  border-radius: 15px;
+}
+
+#leaderboard li span:last-child {
+  float: right;
+}
+
+.goldRank {
+  background: gold;
+}
+
+.silverRank {
+  background: silver;
+}
+
+.bronzeRank {
+  background: #cd7f32;
+}

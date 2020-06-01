@@ -1,7 +1,4 @@
-@media screen and (max-width: 805px) {
-}
-
-@media screen and (max-width: 810px) {
+@media screen and (max-width: 970px) {
   #chat {
     display: none;
     margin-top: 10px;
@@ -14,6 +11,11 @@
     max-width: 100%;
   }
 
+  #leaderboard {
+    display: none;
+    margin-left: 0px;
+  }
+
   #menu {
     display: block;
   }
@@ -23,12 +25,11 @@
   }
 
   #newGame button {
-    width: 105px;
     margin-left: 5px;
   }
 
   #newGame div {
-    width: calc(50% - 90px)
+    width: calc(50% - 100px)
   }
 }
 

@@ -104,8 +104,8 @@ describe('Database', () => {
   })
 
   it ('Should get the high scores', async() => {
-    const highScores = await db.getHighScores()
-    assert.deepEqual(highScores, { result : [{ name: "Player2", games_won: "1" }]})
+    const leaderboard = await db.getLeaderboard()
+    assert.deepEqual(leaderboard, { result : [{ name: "Player2", games_won: "1", rank: "1" }]})
   })
 
   it ('Should delete a game', async() => {

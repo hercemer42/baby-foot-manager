@@ -1,15 +1,3 @@
-#chat {
-  margin-left: 30px;
-  width: 100px;
-  max-width: 350px; 
-  max-height: 100%;
-  border: thin green solid;
-  border-radius: 5px;
-  flex: auto;
-  display: flex;
-  flex-flow: column;
-}
-
 #chat h2 {
   border: thin indigo solid;
   color: green;

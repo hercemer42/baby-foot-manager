@@ -141,8 +141,12 @@ async function deleteGame(data) {
   const client = await _pool.connect() 
 
   try {
+    // first get the game details so we can return them to the client afterwards
+    const gameToDelete = await _getGame(client, data.id)
+
     await client.query(`DELETE FROM games WHERE id = $1`, [ data.id ])
-    return { result: data.id }
+
+    return { result: gameToDelete.rows[0] }
   } catch (error) {
     return { result: null, error: error.stack}
   } finally {
@@ -250,14 +254,15 @@ async function searchPlayers(playerName) {
   }
 }
 
-async function getHighScores() {
+async function getLeaderboard() {
   const client = await _pool.connect() 
 
   try {
     let result = await client.query(`
-      SELECT p.name, count(p.name) as games_won FROM (
+      SELECT RANK() OVER (ORDER BY count(p.name) DESC), p.name, count(p.name) as games_won FROM (
         SELECT CASE WHEN player1score > player2score THEN player1 ELSE player2 END AS winner FROM games
-      ) as r INNER JOIN players p ON p.id = r.winner GROUP BY p.name ORDER BY games_won DESC
+        WHERE player1score != player2score
+      ) as r INNER JOIN players p ON p.id = r.winner GROUP BY p.name ORDER BY games_won DESC, p.name
     `)
 
     return { result: result.rows }
@@ -278,5 +283,5 @@ module.exports = {
   searchPlayers: searchPlayers,
   newMessage: newMessage,
   getMessages: getMessages,
-  getHighScores: getHighScores
+  getLeaderboard: getLeaderboard
 }

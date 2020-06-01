@@ -163,7 +163,7 @@ function bfGameList() {
      * so that they have time to realize their action took effect
      */
     setTimeout(function() {
-      deleteGame(gameData.id)
+      deleteGame(gameData)
       addGame(gameData)
       lastActiveGameIndex--
       updateGameCounter()
@@ -174,8 +174,8 @@ function bfGameList() {
    * Delete a game and display a visual effect
    * @param { number } id 
    */
-  function deleteGameWithVisualEffect(id) {
-    const gameElementToDelete = gameList.querySelector("[data-id='" + id + "']")
+  function deleteGameWithVisualEffect(gameData) {
+    const gameElementToDelete = gameList.querySelector("[data-id='" + gameData.id + "']")
 
     if (!gameElementToDelete) {
       return
@@ -184,26 +184,24 @@ function bfGameList() {
     gameElementToDelete.classList.add('deletedGame')
 
     setTimeout(function() {
-      deleteGame(id) 
+      deleteGame(gameData) 
     }, 150);
   }
 
   /**
    * Remove a game from the dom 
-   * @param { number } id 
+   * @param { gameData } gameData 
    */
-  function deleteGame(id) {
-    const gameElementToDelete = gameList.querySelector("[data-id='" + id + "']")
+  function deleteGame(gameData) {
+    const gameElementToDelete = gameList.querySelector("[data-id='" + gameData.id + "']")
 
     if (!gameElementToDelete) {
       return
     }
 
-    const finished = gameElementToDelete.getElementsByClassName('finishCheckBox')[0].checked
-
     gameList.removeChild(gameElementToDelete)
 
-    if (!finished) {
+    if (gameData.active) {
       lastActiveGameIndex--
       updateGameCounter()
     }

@@ -43,8 +43,19 @@ describe('The Home Page', () => {
   it ('Displays the chat', () => {
     cy.viewport(500, 600)
     cy.get('#menu').click()
-    cy.get('#menu ul li').last().click()
+    cy.get('#menu ul li').eq(1).click()
     cy.get('#chat').should('be.visible')
+    cy.get('#gameBoard').should('not.be.visible')
+    cy.get('#leaderboard').should('not.be.visible')
+    cy.get('#menu ul').should('not.be.visible')
+  })
+
+  it ('Displays the leaderboard', () => {
+    cy.viewport(500, 600)
+    cy.get('#menu').click()
+    cy.get('#menu ul li').last().click()
+    cy.get('#leaderboard').should('be.visible')
+    cy.get('#chat').should('not.be.visible')
     cy.get('#gameBoard').should('not.be.visible')
     cy.get('#menu ul').should('not.be.visible')
   })

@@ -3,5 +3,6 @@ bfWebSocketService.connect().then(() => {
   bfNewGame()
   bfGameList()
   bfChat()
+  bfLeaderboard()
   bfMenu()
 })

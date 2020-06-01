@@ -2,6 +2,7 @@
   display: inline-block;
   width: calc(50% - 105px);
   position: relative;
+  z-index: 3;
 }
 
 #newGame div:first-of-type {

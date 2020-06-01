@@ -9,7 +9,8 @@ module.exports = {
     "bfNewGame": "readonly",
     "bfGameList": "readonly",
     "bfChat": "readonly",
-    "bfMenu": "readonly"
+    "bfMenu": "readonly",
+    "bfLeaderboard": "readonly"
   },
   "rules": {
       "no-unused-vars": [1]

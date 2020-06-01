@@ -96,7 +96,7 @@
 }
 
 #gameList .score {
-  width: 26px;
+  width: 20px;
   height: 20px;
   margin: 0;
   padding: 0px;
@@ -110,8 +110,9 @@
 
 #gameList span input {
   width: 26px;
+  max-width: none;
   border: none;
-  font-size: 18px;
+  font-size: 16px;
   color: red;
   font-family: 'cursedTimer';
   vertical-align: super;

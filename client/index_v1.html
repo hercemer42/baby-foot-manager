@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="./components/game_board/new_game.css?v=1.0"/>
   <link rel="stylesheet" href="./components/game_board/game_list.css?v=1.0"/>
   <link rel="stylesheet" href="./components/player_search/player_search.css?v=1.0"/>
+  <link rel="stylesheet" href="./components/leaderboard/leaderboard.css?v=1.0"/>
   <link rel="stylesheet" href="./components/chat/chat.css?v=1.0"/>
   <link rel="stylesheet" href="./components/menu/menu.css?v=1.0"/>
   <link rel="stylesheet" href="mobile.css?v=1.0">
@@ -25,6 +26,7 @@
       <ul>
         <li><a>Parties</a></li>
         <li><a>Tchat</a></li>
+        <li><a>Classement</a></li>
       </ul>
     </div>
   </div>
@@ -57,6 +59,12 @@
       </ul>
       <textarea id="messageBox" type="text" placeholder="Message ..."></textarea>
     </div>
+    <div id="leaderboard">
+      <div id="leaderboardHeader">
+        <h2>Classement</h2>
+      </div>
+      <ul></ul>
+    </div>
     <div id="error">
       Une erreur de connexion ou de serveur s'est produite. Veuillez contacter un administrateur du système ou réessayer plus tard.
     </div>
@@ -68,6 +76,7 @@
   <script src="./components/player_search/player_search.js?v=1.0"></script>
   <script src="./components/game_board/new_game.js?v=1.0"></script>
   <script src="./components/game_board/game_list.js?v=1.0"></script>
+  <script src="./components/leaderboard/leaderboard.js?v=1.0"></script>
   <script src="./components/chat/chat.js?v=1.0"></script>
   <script src="./components/menu/menu.js?v=1.0"></script>
   <script src="init.js?v=1.0"></script>

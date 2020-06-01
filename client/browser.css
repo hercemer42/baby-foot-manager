@@ -5,5 +5,13 @@
       -webkit-overflow-scrolling: auto;
       top: -4px;
     }
+
+    h1, h2 {
+      font-weight: normal;
+    }
+
+    span, button, li {
+      color: rgb(26, 26, 26);
+    }
   }
 }

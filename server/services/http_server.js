@@ -44,8 +44,8 @@ async function startAPI(db) {
     return runQuery(db, res, 'getMessages')
   })
 
-  await http_server.get('/api/highScores', async (req, res) => {
-    return runQuery(db, res, 'getHighScores')
+  await http_server.get('/api/leaderboard', async (req, res) => {
+    return runQuery(db, res, 'getLeaderboard')
   })
 }
 

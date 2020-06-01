@@ -5,18 +5,25 @@ function bfMenu() {
   const menuList = menu.querySelector('ul')
   const gameBoard = document.getElementById('gameBoard')
   const chat = document.getElementById('chat')
+  const leaderboard = document.getElementById('leaderboard')
+
   var menuOpen = false
   var selected = 'games'
 
   menu.addEventListener('click', function(event) {
     switch(event.target.innerHTML) {
       case 'Parties':
-        toggleElements(true, false)
+        toggleElements(true, false, false)
         selected = 'games'
         break
       case 'Tchat':
-        toggleElements(false, true)
+        toggleElements(false, true, false)
         selected = 'chat'
+        break
+      case 'Classement':
+        toggleElements(false, false, true)
+        selected = 'leaderboard'
+
     }
 
     if (menuOpen) {
@@ -32,23 +39,28 @@ function bfMenu() {
   })
 
   window.onresize = function(event) {
-    if (window.innerWidth > 810) {
-      toggleElements(true, true)
+    if (window.innerWidth > 970) {
+      toggleElements(true, true, true)
       return
     }
 
     switch(selected) {
       case 'games':
-        toggleElements(true, false)
+        toggleElements(true, false, false)
         break
       case 'chat':
-        toggleElements(false, true)
+        toggleElements(false, true, false)
+        break
+      case 'leaderboard':
+        toggleElements(false, false, true)
+
     }
   }
 
-  function toggleElements(gameBoardOn, chatOn) {
+  function toggleElements(gameBoardOn, chatOn, leaderboardOn) {
     gameBoard.style.display = gameBoardOn ? 'flex' : 'none'
     chat.style.display = chatOn ? 'flex' : 'none'
+    leaderboard.style.display = leaderboardOn ? 'flex' : 'none'
   }
 
   function closeMenu() {
