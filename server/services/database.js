@@ -250,6 +250,24 @@ async function searchPlayers(playerName) {
   }
 }
 
+async function getHighScores() {
+  const client = await _pool.connect() 
+
+  try {
+    let result = await client.query(`
+      SELECT p.name, count(p.name) as games_won FROM (
+        SELECT CASE WHEN player1score > player2score THEN player1 ELSE player2 END AS winner FROM games
+      ) as r INNER JOIN players p ON p.id = r.winner GROUP BY p.name ORDER BY games_won DESC
+    `)
+
+    return { result: result.rows }
+  } catch (error) {
+    return { result: null, error: error.stack}
+  } finally {
+    await client.release()
+  }
+}
+
 module.exports = {
   initDb: initDb,
   getGames: getGames,
@@ -259,5 +277,6 @@ module.exports = {
   endPool: endPool,
   searchPlayers: searchPlayers,
   newMessage: newMessage,
-  getMessages: getMessages
+  getMessages: getMessages,
+  getHighScores: getHighScores
 }

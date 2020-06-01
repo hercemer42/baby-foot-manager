@@ -98,9 +98,14 @@ describe('Database', () => {
   })
 
   it ('Should finish a game', async() => {
-    const gameData = { id: savedGameID, active: true }
+    const gameData = { id: savedGameID, active: true, player1score: 4, player2score: 5 }
     const updatedGame = await db.finishGame(gameData)
     assert.equal(updatedGame.result.active, false)
+  })
+
+  it ('Should get the high scores', async() => {
+    const highScores = await db.getHighScores()
+    assert.deepEqual(highScores, { result : [{ name: "Player2", games_won: "1" }]})
   })
 
   it ('Should delete a game', async() => {

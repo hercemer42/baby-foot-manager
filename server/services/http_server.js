@@ -43,6 +43,10 @@ async function startAPI(db) {
   await http_server.get('/api/messages', async (req, res) => {
     return runQuery(db, res, 'getMessages')
   })
+
+  await http_server.get('/api/highScores', async (req, res) => {
+    return runQuery(db, res, 'getHighScores')
+  })
 }
 
 module.exports = { 

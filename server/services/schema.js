@@ -22,7 +22,7 @@ module.exports = [
       "player2Score INTEGER"
     ],
     sequences: [ "games_id_seq" ],
-    indexes: [ "active, updated_at", "active, updated_at, player1Score, player2Score" ]
+    indexes: [ "active, updated_at" ]
   },
   {
     table: "chat",
